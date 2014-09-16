@@ -1,15 +1,6 @@
 #Welcome to UHDT Software
 ####[Useful Coding Standard](http://users.ece.cmu.edu/~eno/coding/CCodingStandard.html)
 
-##Git Workflow
-This project will be split up into multiple branches. The main branches will be ```master```, ```features```, ```hotfix```. The master is where all of the finished code will go (fully tested and working code). The features branch holds all the different features we work on (i.e. gps, xbee, flight controller, etc.). These will be named ```features/name_of_feature```.  Whenever we work on a new feature, we create a new branch. The hotfix branch will be for fixes within the master branch.  
-
-Everyone will work on their own separate branches. These branches will be named ```your_name/branch_of_interest```. For example, if I want to work on the flight controller then I would make a branch called ```jason/features/fc```. If I want to also work on the gps then I would make another branch called ```jason/features/gps```. This allows for each person to work on their own code and reduces collisions within work.
-
-Basically, everyone will work on their own branch (add, commit. push, etc) until they feel they have stable code. When your code is stable and ready, merge your branch to the corresponding branch (talk with person in charge of merging first). For example, I will work ```jason/features/fc``` and when I feel my code is good I will merge to the ```features/fc``` branch. 
-
-Finally, once the ```features``` or ```hotfix``` branch is ready and completely finished. We will merge this to the ```master``` branch. This cycle continues till we have the final working drone :)
-
 ##Important things to do
 #####Use Header File Guards: 
 All .h files must have this! This is needed to prevent redefinition of header files which will cause problems. Naming for header file guards is the same as macros.
