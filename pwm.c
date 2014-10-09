@@ -82,7 +82,7 @@ void pwm_init() {
 
     Remember: if pulse_length is larger than TIM_Period, you will have output HIGH all the time
     */
-    TIM_OCStruct.TIM_Pulse = 6553; /* 25% duty cycle */
+    TIM_OCStruct.TIM_Pulse = 4400; /* 25% duty cycle */
     TIM_OC1Init(TIM4, &TIM_OCStruct);
     TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
@@ -124,8 +124,8 @@ void pwm_leds_init() {
 
     /* Set pins */
     GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6;
-    GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
-    GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;
+    GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_Init(GPIOB, &GPIO_InitStruct);

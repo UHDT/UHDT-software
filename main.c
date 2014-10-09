@@ -25,7 +25,12 @@ int main(void)
     /* Init PWM */
     pwm_leds_init();
 
+    util_delay(1680000*3);
+    int pwm_value = 4400;
     while (1) {
-
+        if (pwm_value < 5500) {
+            TIM_SetCompare1(TIM4, pwm_value);
+            pwm_value++;
+        }
     }
 }
