@@ -13,6 +13,10 @@
 **********************************************************************/
 #include "stm32f4xx_conf.h"
 #include "pwm.h"
+#include "util.h"
+
+#define MAIN_FILE
+#include "globals.h"
 
 int main(void)
 {
@@ -24,13 +28,10 @@ int main(void)
     pwm_init();
     /* Init PWM */
     pwm_leds_init();
-
-    util_delay(1680000*3);
-    int pwm_value = 4400;
+    util_delay_ms(1000*5);
+//    util_delay(UTIL_ONE_SECOND*20);
+    g_pwm_value = PWM_ONE_MS;
+    pwm_run_motor(50);
     while (1) {
-        if (pwm_value < 5500) {
-            TIM_SetCompare1(TIM4, pwm_value);
-            pwm_value++;
-        }
     }
 }

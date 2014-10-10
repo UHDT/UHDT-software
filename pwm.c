@@ -1,8 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "stm32f4xx.h"
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_tim.h"
 #include "pwm.h"
+#include "globals.h"
+#include "util.h"
 
 void pwm_timer_init() {
     TIM_TimeBaseInitTypeDef TIM_BaseStruct;
@@ -82,21 +86,23 @@ void pwm_init() {
 
     Remember: if pulse_length is larger than TIM_Period, you will have output HIGH all the time
     */
-    TIM_OCStruct.TIM_Pulse = 4400; /* 25% duty cycle */
+
+    TIM_OCStruct.TIM_Pulse = 4400; // 6.8% duty cycle
     TIM_OC1Init(TIM4, &TIM_OCStruct);
     TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-    TIM_OCStruct.TIM_Pulse = 32767; /* 50% duty cycle */
+    TIM_OCStruct.TIM_Pulse = 32767; // 50% duty cycle
     TIM_OC2Init(TIM4, &TIM_OCStruct);
     TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-    TIM_OCStruct.TIM_Pulse = 49149; /* 75% duty cycle */
+    TIM_OCStruct.TIM_Pulse = 49149; // 75% duty cycle
     TIM_OC3Init(TIM4, &TIM_OCStruct);
     TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-    TIM_OCStruct.TIM_Pulse = 65535; /* 100% duty cycle */
+    TIM_OCStruct.TIM_Pulse = 65535; // 100% duty cycle
     TIM_OC4Init(TIM4, &TIM_OCStruct);
     TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
+
 }
 
 void pwm_leds_init() {
@@ -121,6 +127,7 @@ void pwm_leds_init() {
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_Init(GPIOD, &GPIO_InitStruct);
+    GPIO_ToggleBits(GPIOD, GPIO_PinSource12);
 
     /* Set pins */
     GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6;
@@ -130,3 +137,20 @@ void pwm_leds_init() {
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
+
+void pwm_run_motor(int percent)
+{
+    int pwm_value = PWM_ONE_MS + percent * PWM_ONE_PERCENT;
+    int increment = pwm_value > g_pwm_value ? 1 : -1;
+    int pwm_difference = abs(pwm_value - g_pwm_value);
+    int i = 0;
+    printf("diff is %d\n", pwm_difference);
+    printf("increment is %d\n", increment);
+    printf("pwm_value is %d\n", pwm_value);
+    for (i = 0; i < pwm_difference; ++i) {
+        g_pwm_value += increment;
+        TIM_SetCompare1(TIM4, g_pwm_value);
+        util_delay_ms(10);
+    }
+}
+
