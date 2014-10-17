@@ -71,7 +71,7 @@ void init_USART1(uint32_t baudrate)
     @param  b       the byte to be send
     @param  esc     flags whether or not to xor
 */
-void sendByte(uint8_t b, int esc)
+void send_byte(uint8_t b, int esc)
 {
     while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
 
@@ -101,13 +101,13 @@ void xbee_send(uint8_t *payload, uint8_t payloadLength)
 	uint8_t msbLen = (payloadLength >> 8) & 0xff;
 	uint8_t lsbLen = payloadLength  & 0xff;
 
-    sendByte(_START_BYTE, 0);
+    send_byte(_START_BYTE, 0);
 
-	sendByte(msbLen, 1);
-	sendByte(lsbLen, 1);
+	send_byte(msbLen, 1);
+	send_byte(lsbLen, 1);
 
-	sendByte(payload[0], 1);
-	sendByte(payload[1], 1);
+	send_byte(payload[0], 1);
+	send_byte(payload[1], 1);
 
 	checksum+= payload[0];
 	checksum+= payload[1];
@@ -115,13 +115,13 @@ void xbee_send(uint8_t *payload, uint8_t payloadLength)
 
 	for (j = 2; j < payloadLength; j++)
     {
-		sendByte(payload[j], 1);
+		send_byte(payload[j], 1);
 		checksum+= payload[j];
 	}
 
 	checksum = 0xff - checksum;
 
-	sendByte(checksum, 1);
+	send_byte(checksum, 1);
 
 }
 
@@ -130,16 +130,16 @@ void xbee_send(uint8_t *payload, uint8_t payloadLength)
 /*
     Generates a frame ID for an xbee API packet.
 */
-uint8_t getFrameId()
+uint8_t get_frame_id()
 {
-	static uint8_t frameId = 0;
-	
-	frameId++;
-	
-	if ( frameId == 0 )
-		frameId = 1;
-		
-	return frameId;
+	static uint8_t frame_id = 0;
+
+	frame_id++;
+
+	if ( frame_id == 0 )
+		frame_id = 1;
+
+	return frame_id;
 }
 
 
@@ -151,13 +151,13 @@ uint8_t getFrameId()
     @param  datum           array of data to be sent
     @param  datumLength     size of data
 */
-void Tx_Request(uint8_t *datum, uint8_t datumLength)
+void tx_request(uint8_t *datum, uint8_t datum_length)
 {
 	uint8_t i;
-    uint8_t request[datumLength + 14];
+    uint8_t request[datum_length + 14];
 
 	request[0] = _TX_API_ID;
-	request[1] = getFrameId();
+	request[1] = get_frame_id();
 	request[2] = (_destH >> 24) & 0xff;
 	request[3] = (_destH >> 16) & 0xff;
 	request[4] = (_destH >> 8) & 0xff;
@@ -171,7 +171,7 @@ void Tx_Request(uint8_t *datum, uint8_t datumLength)
 	request[12] = _BROADCAST_RADIUS;
 	request[13] = _OPTIONS;
 
-	for ( i = 14; i < datumLength+14; i++ )
+	for ( i = 14; i < datum_length+14; i++ )
 		request[i] = datum[i - 14];
 
 	xbee_send(request, sizeof(request));
@@ -184,10 +184,10 @@ void Tx_Request(uint8_t *datum, uint8_t datumLength)
 */
 void echo()
 {
-    uint16_t pkSize = Rx_Buffer[1] * 256 + Rx_Buffer[2] + 4;
+    uint16_t pk_size = Rx_Buffer[1] * 256 + Rx_Buffer[2] + 4;
 
     if ( Rx_Buffer[3] == _RX_API_ID )
-        Tx_Request(Rx_Buffer, pkSize);
+        tx_request(Rx_Buffer, pk_size);
 }
 
 
@@ -201,7 +201,7 @@ void echo()
 	USART1.
 	Reconstructs the packet and places it in the Rx buffer.
 	**The buffer only stores one packet at a time.**
-	
+
 	Any type of data extraction on Rx packets *could* be handled
 	in the else section of this function.
 */
@@ -211,11 +211,11 @@ void USART1_IRQHandler(void)
 	if( USART_GetITStatus(USART1, USART_IT_RXNE) )
     {
 		static uint16_t cnt = 0; // index of received packet
-		static uint16_t expSize = 200;  // expected packet size filled with temp value until MSB and LSB are read
+		static uint16_t exp_size = 200;  // expected packet size filled with temp value until MSB and LSB are read
 		char t = USART1->DR; // the character from the USART1 data register is saved in t
 
 		// keep storing bytes until the checksum is stored
-		if( cnt != expSize - 1)
+		if( cnt != exp_size - 1)
         {
 			Rx_Buffer[cnt] = t; //store data in Rx buffer
 
@@ -227,7 +227,7 @@ void USART1_IRQHandler(void)
             }
 
 			if ( cnt == 3 )
-                expSize = (uint16_t)Rx_Buffer[1] * 256 + Rx_Buffer[2] + 4;    // establish expected packet size
+                exp_size = (uint16_t)Rx_Buffer[1] * 256 + Rx_Buffer[2] + 4;    // establish expected packet size
 
 			cnt++;
 		}
@@ -237,7 +237,7 @@ void USART1_IRQHandler(void)
         { // otherwise reset values
 			echo();
 			cnt = 0;
-			expSize = 200;
+			exp_size = 200;
 		}
 	}
 }
