@@ -27,8 +27,8 @@ int main(void)
 
 	while(1)
 	{
+		tx_request(stuffs, sizeof(stuffs));
 		Delay(0xFFFFFF);
-		Tx_Request(stuffs, sizeof(stuffs));
 	}
 }
 
