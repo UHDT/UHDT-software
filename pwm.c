@@ -138,19 +138,39 @@ void pwm_leds_init() {
     GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
-void pwm_run_motor(int percent)
+void pwm_run_motor(int percent, int delay_ms)
 {
+    // pwm_value we want to go to
     int pwm_value = PWM_ONE_MS + percent * PWM_ONE_PERCENT;
+    // how much to increment motors by
     int increment = pwm_value > g_pwm_value ? 1 : -1;
     int pwm_difference = abs(pwm_value - g_pwm_value);
     int i = 0;
-    printf("diff is %d\n", pwm_difference);
-    printf("increment is %d\n", increment);
-    printf("pwm_value is %d\n", pwm_value);
-    for (i = 0; i < pwm_difference; ++i) {
+    // increment motor values to certain given percentage
+    for (i = 0; i < pwm_difference; ++i)
+    {
         g_pwm_value += increment;
         TIM_SetCompare1(TIM4, g_pwm_value);
-        util_delay_ms(10);
+        util_delay_ms(delay_ms);
     }
 }
+
+void pwm_increment_motor(int increment, int percent, int delay_ms)
+{
+    int pwm_value = percent*PWM_ONE_PERCENT;
+    int final_pwm = g_pwm_value + increment*pwm_value;
+    if (final_pwm >= PWM_ONE_MS*2) {
+        pwm_value = PWM_ONE_MS*2 - g_pwm_value;
+    } else if (final_pwm <= PWM_ONE_MS) {
+        pwm_value = g_pwm_value - PWM_ONE_MS;
+    }
+    int i = 0;
+    for (i = 0; i < pwm_value; ++i)
+    {
+        g_pwm_value += increment;
+        TIM_SetCompare1(TIM4, g_pwm_value);
+        util_delay_ms(delay_ms);
+    }
+}
+
 

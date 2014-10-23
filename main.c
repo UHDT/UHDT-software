@@ -29,9 +29,20 @@ int main(void)
     /* Init PWM */
     pwm_leds_init();
     util_delay_ms(1000*5);
-//    util_delay(UTIL_ONE_SECOND*20);
     g_pwm_value = PWM_ONE_MS;
-    pwm_run_motor(50);
+    int count = 0;
+    int increment = PWM_INCREMENT;
     while (1) {
+        pwm_increment_motor(increment, 10, 10);
+        util_delay_ms(1000*5);
+        printf("%d\n", g_pwm_value);
+        count++;
+        if (count % 3 == 0) {
+            if (increment == PWM_INCREMENT) {
+                increment = PWM_DECREMENT;
+            } else {
+                increment = PWM_INCREMENT;
+            }
+        }
     }
 }
