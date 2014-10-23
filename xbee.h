@@ -30,11 +30,11 @@ volatile uint8_t Rx_Buffer[110];     //single packet buffer for USART1
 
 void init_USART1(uint32_t baudrate);
 
-void sendByte(uint8_t b, int esc);
+void send_byte(uint8_t b, int esc);
 
 void xbee_send(uint8_t *payload, uint8_t payloadLength);
 
-uint8_t getFrameId();
+uint8_t get_frame_id();
 
-void Tx_Request(uint8_t *datum, uint8_t datumLength);
+void tx_request(uint8_t *datum, uint8_t datumLength);
 #endif

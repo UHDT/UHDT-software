@@ -29,6 +29,7 @@ int main(void)
 	{
 		tx_request(stuffs, sizeof(stuffs));
 		Delay(0xFFFFFF);
+		printf("hi");
 	}
 }
 
