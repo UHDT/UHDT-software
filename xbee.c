@@ -190,7 +190,40 @@ void echo()
         tx_request(Rx_Buffer, pk_size);
 }
 
+void rx_request()
+{
 
+	static uint16_t cnt = 0; // index of received packet
+	static uint16_t exp_size = 200;  // expected packet size filled with temp value until MSB and LSB are read
+	char t = USART1->DR; // the character from the USART1 data register is saved in t
+
+	// keep storing bytes until the checksum is stored
+	if( cnt != exp_size - 1)
+    {
+		Rx_Buffer[cnt] = t; //store data in Rx buffer
+
+		//xor byte if necessary
+		if ( Rx_Buffer[cnt-1] == _ESCAPE && cnt > 0 )
+        {
+            Rx_Buffer[cnt-1] = t ^ 0x20;
+            cnt--;
+        }
+
+		if ( cnt == 3 )
+            exp_size = (uint16_t)Rx_Buffer[1] * 256 + Rx_Buffer[2] + 4;    // establish expected packet size
+
+		cnt++;
+	}
+
+	//at this point, may need to flag that there is a new packet in the buffer
+	else
+    { // otherwise reset values
+		echo();
+		cnt = 0;
+		exp_size = 200;
+		rx_count++;
+	}
+}
 
 /*
 	**Known flaw:  Receiving multiple escape characters
@@ -210,6 +243,8 @@ void USART1_IRQHandler(void)
 	// check if the USART1 receive interrupt flag was set
 	if( USART_GetITStatus(USART1, USART_IT_RXNE) )
     {
+		rx_request();
+		/**
 		static uint16_t cnt = 0; // index of received packet
 		static uint16_t exp_size = 200;  // expected packet size filled with temp value until MSB and LSB are read
 		char t = USART1->DR; // the character from the USART1 data register is saved in t
@@ -220,7 +255,7 @@ void USART1_IRQHandler(void)
 			Rx_Buffer[cnt] = t; //store data in Rx buffer
 
 			//xor byte if necessary
-			if ( Rx_Buffer[cnt-1] == _ESCAPE )
+			if ( Rx_Buffer[cnt-1] == _ESCAPE && cnt > 0 )
             {
                 Rx_Buffer[cnt-1] = t ^ 0x20;
                 cnt--;
@@ -239,5 +274,6 @@ void USART1_IRQHandler(void)
 			cnt = 0;
 			exp_size = 200;
 		}
+		**/
 	}
 }

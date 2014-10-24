@@ -14,6 +14,7 @@
 
 void Delay(__IO uint32_t nCount);
 
+int rx_count = 0;
 
 int main(void)
 {
@@ -29,7 +30,18 @@ int main(void)
 	{
 		tx_request(stuffs, sizeof(stuffs));
 		Delay(0xFFFFFF);
-		printf("hi");
+
+		printf("%d\n",rx_count);
+		/**
+		if (rx_flag)
+		{
+			int count = 0;
+			for (count = 0; count < 110; count++)
+			{
+				printf("%d",Rx_Buffer[count]);
+			}
+		}
+		**/
 	}
 }
 

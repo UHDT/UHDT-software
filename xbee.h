@@ -21,12 +21,14 @@
 
 #define _destH	0x0013A200  //base station's xbee
 #define _destL	0x408B1D11
+
+#define TRUE 1
+#define FALSE 0
 //	0x0013A200      drone's xbee
 //	0x408B1D28
 
 volatile uint8_t Rx_Buffer[110];     //single packet buffer for USART1
-
-
+extern int rx_count;
 
 void init_USART1(uint32_t baudrate);
 
@@ -37,4 +39,6 @@ void xbee_send(uint8_t *payload, uint8_t payloadLength);
 uint8_t get_frame_id();
 
 void tx_request(uint8_t *datum, uint8_t datumLength);
+
+void rx_request();
 #endif
