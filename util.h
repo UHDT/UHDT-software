@@ -9,6 +9,15 @@
 #define TRUE                        1
 #define FALSE                       0
 
+// led macros
+#define UTIL_GPIO_LED               GPIOD
+#define UTIL_GPIO_CLOCK             RCC_AHB1Periph_GPIOD
+#define UTIL_LED1_PIN               GPIO_Pin_12
+#define UTIL_LED2_PIN               GPIO_Pin_13
+#define UTIL_LED3_PIN               GPIO_Pin_14
+#define UTIL_LED4_PIN               GPIO_Pin_15
+
+void util_leds_init();
 void util_delay(uint32_t tick);
 void util_delay_ms(const uint32_t ms);
 

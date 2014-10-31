@@ -22,20 +22,19 @@ int main(void)
 {
     /* Initialize system */
     SystemInit();
-    /* Init leds */
-    pwm_timer_init( );
-    /* Init timer */
     pwm_init();
-    /* Init PWM */
-    pwm_leds_init();
+    util_leds_init();
     util_delay_ms(1000*5);
-    g_pwm_value = PWM_ONE_MS;
+    int front_pwm = PWM_ONE_MS;
     int count = 0;
     int increment = PWM_INCREMENT;
+    GPIO_SetBits(UTIL_GPIO_LED, UTIL_LED1_PIN);
+    GPIO_SetBits(UTIL_GPIO_LED, UTIL_LED2_PIN);
+    GPIO_SetBits(UTIL_GPIO_LED, UTIL_LED3_PIN);
+    GPIO_SetBits(UTIL_GPIO_LED, UTIL_LED4_PIN);
     while (1) {
-        pwm_increment_motor(increment, 10, 10);
+        pwm_increment_motor(&front_pwm, increment, 10);
         util_delay_ms(1000*5);
-        printf("%d\n", g_pwm_value);
         count++;
         if (count % 3 == 0) {
             if (increment == PWM_INCREMENT) {
