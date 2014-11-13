@@ -3,11 +3,12 @@
 
 #include <stdint.h>
 
+#define TRUE                        1
+#define FALSE                       0
+
 #define UTIL_ONE_SECOND             168000
 #define UTIL_STM32_CLOCK_HZ         168000000UL
 #define UTIL_STM32_CYCLES_PER_LOOP  10
-#define TRUE                        1
-#define FALSE                       0
 
 // led macros
 #define UTIL_GPIO_LED               GPIOD

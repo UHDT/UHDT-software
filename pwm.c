@@ -122,6 +122,22 @@ static void pwm_pins_init() {
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource8, GPIO_AF_TIM4);
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_TIM4);
 
+    // TAKE THIS PART OF CODE OUT LATER (JUST INITS LEDS FOR PWM)
+    //////////////////////////////////////////////////////////////
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+    GPIO_PinAFConfig(GPIOD, GPIO_PinSource13, GPIO_AF_TIM4);
+    GPIO_PinAFConfig(GPIOD, GPIO_PinSource14, GPIO_AF_TIM4);
+    GPIO_PinAFConfig(GPIOD, GPIO_PinSource15, GPIO_AF_TIM4);
+    //////////////////////////////////////////////////////////////
+
+    /* Set pins */
+    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+    GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
+    GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+    GPIO_Init(GPIOD, &GPIO_InitStruct);
+
     // set pints for pwm
     GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
     GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;

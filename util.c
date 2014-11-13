@@ -10,7 +10,7 @@ void util_leds_init()
     RCC_AHB1PeriphClockCmd(UTIL_GPIO_CLOCK, ENABLE);
 
     // set pins for leds
-    GPIO_InitStruct.GPIO_Pin = UTIL_LED1_PIN | UTIL_LED2_PIN | UTIL_LED3_PIN | UTIL_LED4_PIN;
+    GPIO_InitStruct.GPIO_Pin = UTIL_LED1_PIN;// | UTIL_LED2_PIN | UTIL_LED3_PIN | UTIL_LED4_PIN;
     GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;

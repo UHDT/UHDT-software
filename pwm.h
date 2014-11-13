@@ -2,7 +2,7 @@
 #define PWM_H_INCLUDE
 
 #define PWM_ONE_MS                      4400
-#define PWM_ONE_PERCENT                 45
+#define PWM_ONE_PERCENT                 44
 #define PWM_INCREMENT                   1
 #define PWM_DECREMENT                   -1
 
