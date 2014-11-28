@@ -1,6 +1,8 @@
 #ifndef IMU_H_INCLUDED
 #define IMU_H_INCLUDED
 
+#include <stdint.h>
+
 typedef struct Accel
 {
     int x, y, z;

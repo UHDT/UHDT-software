@@ -9,6 +9,12 @@
 #include "macros.h"
 #include "util.h"
 
+// TODO:
+// Work on making the pwm functions more versatile
+// Have it so that you can initialize any of the pwm channels
+// Make it so that you can just say what frequency and period (within a range)
+
+
 void pwm_init()
 {
     pwm_timer_init();
@@ -56,10 +62,10 @@ void pwm_timer_init() {
     /* Enable clock for TIM4 */
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
 
-    TIM_BaseStruct.TIM_Prescaler = 5;
+    TIM_BaseStruct.TIM_Prescaler = 19; // prev 5
     /* Count up */
     TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
-    TIM_BaseStruct.TIM_Period = 65535; /* 10kHz PWM */
+    TIM_BaseStruct.TIM_Period = 65535; // prev 65535
     TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_BaseStruct.TIM_RepetitionCounter = 0;
     /* Initialize TIM4 */
