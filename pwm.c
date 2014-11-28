@@ -6,6 +6,7 @@
 #include "stm32f4xx_tim.h"
 #include "pwm.h"
 #include "globals.h"
+#include "macros.h"
 #include "util.h"
 
 void pwm_init()
@@ -49,7 +50,7 @@ void pwm_init()
 //  If you get TIM_Period larger than max timer value (in our case 65535),
 //  you have to choose larger prescaller and slow down timer tick frequency
 
-static void pwm_timer_init() {
+void pwm_timer_init() {
     TIM_TimeBaseInitTypeDef TIM_BaseStruct;
 
     /* Enable clock for TIM4 */
@@ -87,31 +88,31 @@ static void pwm_timer_init() {
 //
 //  Remember: if pulse_length is larger than TIM_Period, you will have output HIGH all the time
 
-static void pwm_channel_init() {
+void pwm_channel_init() {
     TIM_OCInitTypeDef TIM_OCStruct;
     TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
     TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
     TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
 
-    TIM_OCStruct.TIM_Pulse = PWM_ONE_MS; // 6.8% duty cycle
+    TIM_OCStruct.TIM_Pulse = PULSE_ONE_MS; // 6.8% duty cycle
     TIM_OC1Init(TIM4, &TIM_OCStruct);
     TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-    TIM_OCStruct.TIM_Pulse = PWM_ONE_MS; // 6.8% duty cycle
+    TIM_OCStruct.TIM_Pulse = PULSE_ONE_MS; // 6.8% duty cycle
     TIM_OC2Init(TIM4, &TIM_OCStruct);
     TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-    TIM_OCStruct.TIM_Pulse = PWM_ONE_MS; // 6.8% duty cycle
+    TIM_OCStruct.TIM_Pulse = PULSE_ONE_MS; // 6.8% duty cycle
     TIM_OC3Init(TIM4, &TIM_OCStruct);
     TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-    TIM_OCStruct.TIM_Pulse = PWM_ONE_MS; // 6.8% duty cycle
+    TIM_OCStruct.TIM_Pulse = PULSE_ONE_MS; // 6.8% duty cycle
     TIM_OC4Init(TIM4, &TIM_OCStruct);
     TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
 }
 
-static void pwm_pins_init() {
+void pwm_pins_init() {
     GPIO_InitTypeDef GPIO_InitStruct;
 
     // set clock for GPIOB
@@ -121,22 +122,6 @@ static void pwm_pins_init() {
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource8, GPIO_AF_TIM4);
     GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_TIM4);
-
-    // TAKE THIS PART OF CODE OUT LATER (JUST INITS LEDS FOR PWM)
-    //////////////////////////////////////////////////////////////
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
-    GPIO_PinAFConfig(GPIOD, GPIO_PinSource13, GPIO_AF_TIM4);
-    GPIO_PinAFConfig(GPIOD, GPIO_PinSource14, GPIO_AF_TIM4);
-    GPIO_PinAFConfig(GPIOD, GPIO_PinSource15, GPIO_AF_TIM4);
-    //////////////////////////////////////////////////////////////
-
-    /* Set pins */
-    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
-    GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
-    GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
-    GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
-    GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
-    GPIO_Init(GPIOD, &GPIO_InitStruct);
 
     // set pints for pwm
     GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
@@ -150,7 +135,7 @@ static void pwm_pins_init() {
 void pwm_percent_motor(int *motor, int percent)
 {
     // pwm_value we want to go to
-    int pwm_value = PWM_ONE_MS + percent * PWM_ONE_PERCENT;
+    int pwm_value = PULSE_ONE_MS + percent * PULSE_ONE_PERCENT;
     // how much to increment motors by
     int increment = pwm_value > *motor ? 1 : -1;
     int pwm_difference = abs(pwm_value - *motor);
@@ -163,15 +148,18 @@ void pwm_percent_motor(int *motor, int percent)
     }
 }
 
-void pwm_increment_motor(int *motor, int increment, int percent)
+void pwm_increment_motor(int *motor, int percent)
 {
-    int pwm_value = percent*PWM_ONE_PERCENT;
-    int final_pwm = *motor + increment*pwm_value;
-    if (final_pwm >= PWM_ONE_MS*2) {
-        pwm_value = PWM_ONE_MS*2 - *motor;
-    } else if (final_pwm <= PWM_ONE_MS) {
-        pwm_value = *motor - PWM_ONE_MS;
+    int pwm_value = percent*PULSE_ONE_PERCENT;
+    int final_pwm = *motor + pwm_value;
+
+    if (final_pwm > PULSE_ONE_MS*2) {
+        pwm_value = PULSE_ONE_MS*2;
+    } else if (final_pwm < PULSE_ONE_MS) {
+        pwm_value = PULSE_ONE_MS;
     }
+    int increment = percent < 0 ? -1 : 1;
+
     int i = 0;
     for (i = 0; i < pwm_value; ++i)
     {

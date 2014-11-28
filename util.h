@@ -2,24 +2,47 @@
 #define UTIL_H_INCLUDED
 
 #include <stdint.h>
+#include "stm32f4xx.h"
+#include "stm32f4xx_rcc.h"
 
-#define TRUE                        1
-#define FALSE                       0
-
-#define UTIL_ONE_SECOND             168000
-#define UTIL_STM32_CLOCK_HZ         168000000UL
-#define UTIL_STM32_CYCLES_PER_LOOP  10
-
-// led macros
-#define UTIL_GPIO_LED               GPIOD
-#define UTIL_GPIO_CLOCK             RCC_AHB1Periph_GPIOD
-#define UTIL_LED1_PIN               GPIO_Pin_12
-#define UTIL_LED2_PIN               GPIO_Pin_13
-#define UTIL_LED3_PIN               GPIO_Pin_14
-#define UTIL_LED4_PIN               GPIO_Pin_15
+static __IO uint32_t util_timing_delay;
+/**
+ * This variable can be used in main
+ * It is automatically increased every time systick make an interrupt
+ */
+static __IO uint32_t util_time;
+static __IO uint32_t util_time2;
 
 void util_leds_init();
-void util_delay(uint32_t tick);
-void util_delay_ms(const uint32_t ms);
+
+/*
+How to use Timer:
+int main()
+{
+    SystemInit();
+    util_delay_init();
+    // if you want a straight delay (1s)
+    util_delay_ms(1000);
+    // if you want to use like an interrupt
+    util_delay_set_time(0); // resets the counter to 0
+    while (1)
+    {
+        if (util_delay_time() >= 500000)
+        {
+            util_delay_set_time(0);
+            GPIO_ToggleBits(GPIO_LED, LED1_PIN);
+        }
+    }
+}
+*/
+void util_delay_init(void);
+void util_delay_ms(__IO uint32_t nTime);
+void util_delay_ns(__IO uint32_t nTime);
+uint32_t util_delay_time(void);
+void util_delay_set_time(uint32_t time);
+uint32_t util_delay_time2(void);
+void util_delay_set_time2(uint32_t time);
+void util_delay_enable_systick(void);
+void util_delay_disable_systick(void);
 
 #endif /* UTIL_H_INCLUDED */

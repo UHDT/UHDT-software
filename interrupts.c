@@ -1,8 +1,11 @@
 #include <stm32f4xx_tim.h>
 #include <stm32f4xx_rcc.h>
 #include <misc.h>
+#include "macros.h"
 #include "util.h"
 #include "interrupts.h"
+#include "imu.h"
+#include "globals.h"
 
 void int_init()
 {
@@ -39,6 +42,10 @@ void TIM2_IRQHandler()
     if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
     {
         TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-        GPIO_ToggleBits(UTIL_GPIO_LED, UTIL_LED1_PIN);
+        GPIO_ToggleBits(GPIO_LED, LED1_PIN);
+        imu_fill_gyro_data(&g_gyro);
+        imu_fill_mag_data(&g_mag);
+        imu_fill_accel_data(&g_accel);
+        imu_fill_angle_data(&g_ang, &g_gyro, &g_mag, &g_accel);
     }
 }
