@@ -10,7 +10,7 @@
 #define STM32_CYCLES_PER_LOOP       10
 
 #define PULSE_ONE_MS                4400
-#define PULSE_ONE_PERCENT           44
+#define PULSE_ONE_PERCENT           45
 
 // led macros
 #define GPIO_LED                    GPIOD

@@ -36,6 +36,10 @@ int main(void)
     imu_configure_mag();
     int_init();
 
+    int pwm = 4400;
+    util_delay_ms(5000);
+    pwm_percent_motor(&pwm, 20);
+
     while (1) {
 //        printf("gyro: %d %d %d\n", (int)g_gyro.x_ang, (int)g_gyro.y_ang, (int)g_gyro.z_ang);
 //        printf("mag: %d %d %d\n", (int)mag.x, (int)mag.y, (int)mag.z);
