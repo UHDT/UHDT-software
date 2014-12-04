@@ -11,37 +11,38 @@
 */
 
 #include "xbee.h"
+#include "protocol.h"
+
+#define MAIN
+#include "globals.h"
 
 void Delay(__IO uint32_t nCount);
 
-int rx_count = 0;
+uint8_t escaped = FALSE;
 
 int main(void)
 {
 	init_USART1(9600);
 
+	//DroneData data;
+	/*
 	uint8_t stuffs[10];
 	uint8_t i;
 
 	for ( i = 0; i < 10; i++ )
         stuffs[i] = i+1;
 
+	stuffs[3] = 0x7D;
+	*/
+
+	protocol_init_data();
+
 	while(1)
 	{
-		tx_request(stuffs, sizeof(stuffs));
+		//tx_request(stuffs, sizeof(stuffs));
+		//protocol_tx_data();
+		protocol_tx_data();
 		Delay(0xFFFFFF);
-
-		printf("%d\n",rx_count);
-		/**
-		if (rx_flag)
-		{
-			int count = 0;
-			for (count = 0; count < 110; count++)
-			{
-				printf("%d",Rx_Buffer[count]);
-			}
-		}
-		**/
 	}
 }
 

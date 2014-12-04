@@ -28,7 +28,7 @@
 //	0x408B1D28
 
 volatile uint8_t Rx_Buffer[110];     //single packet buffer for USART1
-extern int rx_count;
+extern uint8_t escaped;
 
 void init_USART1(uint32_t baudrate);
 

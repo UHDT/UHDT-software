@@ -200,28 +200,36 @@ void rx_request()
 	// keep storing bytes until the checksum is stored
 	if( cnt != exp_size - 1)
     {
-		Rx_Buffer[cnt] = t; //store data in Rx buffer
-
 		//xor byte if necessary
-		if ( Rx_Buffer[cnt-1] == _ESCAPE && cnt > 0 )
-        {
-            Rx_Buffer[cnt-1] = t ^ 0x20;
-            cnt--;
-        }
+		if (escaped == TRUE)
+		{
+			Rx_Buffer[cnt] = t ^ 0x20;
+			cnt++;
+			escaped = FALSE;
+		}
+		else if (t == _ESCAPE)
+		{
+			escaped = TRUE;
+		}
+		else
+		{
+			Rx_Buffer[cnt] = t;
+			cnt++;
+		}
 
 		if ( cnt == 3 )
+		{
             exp_size = (uint16_t)Rx_Buffer[1] * 256 + Rx_Buffer[2] + 4;    // establish expected packet size
-
-		cnt++;
+		}
 	}
 
 	//at this point, may need to flag that there is a new packet in the buffer
 	else
     { // otherwise reset values
-		echo();
+		//echo();
+		protocol_rx_data();
 		cnt = 0;
 		exp_size = 200;
-		rx_count++;
 	}
 }
 
@@ -244,36 +252,5 @@ void USART1_IRQHandler(void)
 	if( USART_GetITStatus(USART1, USART_IT_RXNE) )
     {
 		rx_request();
-		/**
-		static uint16_t cnt = 0; // index of received packet
-		static uint16_t exp_size = 200;  // expected packet size filled with temp value until MSB and LSB are read
-		char t = USART1->DR; // the character from the USART1 data register is saved in t
-
-		// keep storing bytes until the checksum is stored
-		if( cnt != exp_size - 1)
-        {
-			Rx_Buffer[cnt] = t; //store data in Rx buffer
-
-			//xor byte if necessary
-			if ( Rx_Buffer[cnt-1] == _ESCAPE && cnt > 0 )
-            {
-                Rx_Buffer[cnt-1] = t ^ 0x20;
-                cnt--;
-            }
-
-			if ( cnt == 3 )
-                exp_size = (uint16_t)Rx_Buffer[1] * 256 + Rx_Buffer[2] + 4;    // establish expected packet size
-
-			cnt++;
-		}
-
-		//at this point, may need to flag that there is a new packet in the buffer
-		else
-        { // otherwise reset values
-			echo();
-			cnt = 0;
-			exp_size = 200;
-		}
-		**/
 	}
 }
