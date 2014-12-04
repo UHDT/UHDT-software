@@ -33,4 +33,6 @@ void global_init();
     extern int                      g_roll_setpoint;
     extern Motor                    g_right_motor;
     extern Motor                    g_left_motor;
+    extern Motor                    g_back_motor;
+    extern Motor                    g_front_motor;
 #endif

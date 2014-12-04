@@ -12,6 +12,16 @@
 // PWM macros
 #define PULSE_ONE_MS                4700
 #define PULSE_ONE_PERCENT           47
+#define GPIO_PWM                    GPIOB
+#define PWM_CLOCK                   RCC_AHB1Periph_GPIOB
+#define PWM1_PIN                    GPIO_Pin_6
+#define PWM2_PIN                    GPIO_Pin_7
+#define PWM3_PIN                    GPIO_Pin_8
+#define PWM4_PIN                    GPIO_Pin_9
+#define PWM1_PIN_SOURCE             GPIO_PinSource6
+#define PWM2_PIN_SOURCE             GPIO_PinSource7
+#define PWM3_PIN_SOURCE             GPIO_PinSource8
+#define PWM4_PIN_SOURCE             GPIO_PinSource9
 
 #define RIGHT_MOTOR_FUNC            TIM_SetCompare1     //PB6
 #define RIGHT_MOTOR_PULSE           4700
@@ -29,7 +39,7 @@
 
 // led macros
 #define GPIO_LED                    GPIOD
-#define GPIO_CLOCK                  RCC_AHB1Periph_GPIOD
+#define LED_CLOCK                   RCC_AHB1Periph_GPIOD
 #define LED1_PIN                    GPIO_Pin_12
 #define LED2_PIN                    GPIO_Pin_13
 #define LED3_PIN                    GPIO_Pin_14

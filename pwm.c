@@ -100,19 +100,19 @@ void pwm_channel_init() {
     TIM_OCStruct.TIM_OutputState = TIM_OutputState_Enable;
     TIM_OCStruct.TIM_OCPolarity = TIM_OCPolarity_Low;
 
-    TIM_OCStruct.TIM_Pulse = PULSE_ONE_MS; // 6.8% duty cycle
+    TIM_OCStruct.TIM_Pulse = RIGHT_MOTOR_PULSE; // 6.8% duty cycle
     TIM_OC1Init(TIM4, &TIM_OCStruct);
     TIM_OC1PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-    TIM_OCStruct.TIM_Pulse = PULSE_ONE_MS; // 6.8% duty cycle
+    TIM_OCStruct.TIM_Pulse = LEFT_MOTOR_PULSE; // 6.8% duty cycle
     TIM_OC2Init(TIM4, &TIM_OCStruct);
     TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-    TIM_OCStruct.TIM_Pulse = PULSE_ONE_MS; // 6.8% duty cycle
+    TIM_OCStruct.TIM_Pulse = BACK_MOTOR_PULSE; // 6.8% duty cycle
     TIM_OC3Init(TIM4, &TIM_OCStruct);
     TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-    TIM_OCStruct.TIM_Pulse = PULSE_ONE_MS; // 6.8% duty cycle
+    TIM_OCStruct.TIM_Pulse = FRONT_MOTOR_PULSE; // 6.8% duty cycle
     TIM_OC4Init(TIM4, &TIM_OCStruct);
     TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
@@ -122,20 +122,20 @@ void pwm_pins_init() {
     GPIO_InitTypeDef GPIO_InitStruct;
 
     // set clock for GPIOB
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+    RCC_AHB1PeriphClockCmd(PWM_CLOCK, ENABLE);
 
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_TIM4);
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource8, GPIO_AF_TIM4);
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_TIM4);
+    GPIO_PinAFConfig(GPIO_PWM, PWM1_PIN_SOURCE, GPIO_AF_TIM4);
+    GPIO_PinAFConfig(GPIO_PWM, PWM2_PIN_SOURCE, GPIO_AF_TIM4);
+    GPIO_PinAFConfig(GPIO_PWM, PWM3_PIN_SOURCE, GPIO_AF_TIM4);
+    GPIO_PinAFConfig(GPIO_PWM, PWM3_PIN_SOURCE, GPIO_AF_TIM4);
 
     // set pints for pwm
-    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
+    GPIO_InitStruct.GPIO_Pin = PWM1_PIN | PWM2_PIN | PWM3_PIN | PWM4_PIN;
     GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
-    GPIO_Init(GPIOB, &GPIO_InitStruct);
+    GPIO_Init(GPIO_PWM, &GPIO_InitStruct);
 }
 
 void pwm_cap_value(int *pwm_value, int min, int max)

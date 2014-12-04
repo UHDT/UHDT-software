@@ -35,7 +35,7 @@ void util_leds_init()
     GPIO_InitTypeDef GPIO_InitStruct;
 
     // initiliaze clock for leds
-    RCC_AHB1PeriphClockCmd(GPIO_CLOCK, ENABLE);
+    RCC_AHB1PeriphClockCmd(LED_CLOCK, ENABLE);
 
     // set pins for leds
     GPIO_InitStruct.GPIO_Pin = LED1_PIN | LED2_PIN | LED3_PIN | LED4_PIN;
