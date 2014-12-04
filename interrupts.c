@@ -51,8 +51,8 @@ void TIM2_IRQHandler()
         imu_fill_accel_data(&g_accel);
         imu_fill_angle_data(&g_ang, &g_gyro, &g_mag, &g_accel);
         int roll_difference = (g_ang.comp_x - g_roll_setpoint) * P_ROLL;
-        int left_motor = PULSE_ONE_MS + 1500;
-        int right_motor = PULSE_ONE_MS + 800;
+        int left_motor = g_left_motor.PULSE_VALUE + 1500;
+        int right_motor = g_right_motor.PULSE_VALUE + 800;
 
         // increment or decrement each motors value
         left_motor += roll_difference;
@@ -63,8 +63,8 @@ void TIM2_IRQHandler()
         pwm_cap_value(&right_motor, PULSE_ONE_MS, PULSE_ONE_MS*2);
 
         // change the motor speeds
-        pwm_inc_to_value(&g_left_motor, left_motor, &LEFT_MOTOR_FUNC);
-        pwm_inc_to_value(&g_right_motor, right_motor, &RIGHT_MOTOR_FUNC);
+        pwm_inc_to_value(&g_left_motor, left_motor);
+        pwm_inc_to_value(&g_right_motor, right_motor);
 
     }
 }

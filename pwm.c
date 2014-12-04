@@ -138,7 +138,7 @@ void pwm_pins_init() {
     GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
-void pwm_cap_value(int *pwm_value, int min, int max) 
+void pwm_cap_value(int *pwm_value, int min, int max)
 {
     if (*pwm_value > max) {
         *pwm_value = max;
@@ -147,39 +147,41 @@ void pwm_cap_value(int *pwm_value, int min, int max)
     }
 }
 
-void pwm_inc_to_value(int *motor, int pwm_value, MotorFunction motor_func)
+void pwm_inc_to_value(Motor *motor, int pwm_value)
 {
     // how much to increment motors by
-    int increment = pwm_value > *motor ? 1 : -1;
-    int pwm_difference = abs(pwm_value - *motor);
+    int increment = pwm_value > motor->pwm_value ? 1 : -1;
+    int pwm_difference = abs(pwm_value - motor->pwm_value);
     int i = 0;
     // increment motor values to certain given percentage
     for (i = 0; i < pwm_difference; ++i)
     {
-        *motor += increment;
-        motor_func(TIM4, *motor);
+        motor->pwm_value += increment;
+        motor->MOTOR_FUNC(TIM4, motor->pwm_value);
     }
 }
 
-void pwm_inc_by_value(int *motor, int pwm_value, MotorFunction motor_func)
+void pwm_inc_by_value(Motor *motor, int pwm_value)
 {
-    int final_pwm = *motor + pwm_value;
+    int final_pwm = motor->pwm_value + pwm_value;
 
-    if (final_pwm > PULSE_ONE_MS*2) {
-        pwm_value = PULSE_ONE_MS*2;
-    } else if (final_pwm < PULSE_ONE_MS) {
-        pwm_value = PULSE_ONE_MS;
+    pwm_cap_value(&(motor->pwm_value), motor->PULSE_VALUE, motor->PULSE_VALUE*2);
+    if (final_pwm > motor->PULSE_VALUE*2) {
+        pwm_value = motor->PULSE_VALUE*2;
+    } else if (final_pwm < motor->PULSE_VALUE) {
+        pwm_value = motor->PULSE_VALUE;
     }
     int increment = pwm_value < 0 ? -1 : 1;
 
     int i = 0;
     for (i = 0; i < pwm_value; ++i)
     {
-        *motor += increment;
-        motor_func(TIM4, *motor);
+        motor->pwm_value += increment;
+        motor->MOTOR_FUNC(TIM4, motor->pwm_value);
     }
 }
 
+/*
 void pwm_inc_to_percent(int *motor, int percent, MotorFunction motor_func)
 {
     // pwm_value we want to go to
@@ -216,3 +218,4 @@ void pwm_inc_by_percent(int *motor, int percent, MotorFunction motor_func)
     }
 }
 
+*/
