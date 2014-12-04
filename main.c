@@ -13,6 +13,7 @@
 **********************************************************************/
 #include <stdio.h>
 #include "stm32f4xx_conf.h"
+#include "stm32f4xx_tim.h"
 #include "pwm.h"
 #include "util.h"
 #include "interrupts.h"
@@ -36,9 +37,14 @@ int main(void)
     imu_configure_mag();
     int_init();
 
-    int pwm = 4400;
-    util_delay_ms(5000);
-    pwm_percent_motor(&pwm, 20);
+    GPIO_ToggleBits(GPIO_LED, LED2_PIN);
+
+//    int right_pwm = PULSE_ONE_MS;
+//    int left_pwm = PULSE_ONE_MS;
+//    util_delay_ms(5000);
+//    pwm_percent_motor(&right_pwm, 20, &RIGHT_MOTOR_FUNC);
+//    pwm_percent_motor(&left_pwm, 20, &LEFT_MOTOR_FUNC);
+
 
     while (1) {
 //        printf("gyro: %d %d %d\n", (int)g_gyro.x_ang, (int)g_gyro.y_ang, (int)g_gyro.z_ang);

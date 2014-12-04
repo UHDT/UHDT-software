@@ -9,8 +9,13 @@
 #define STM32_CLOCK_HZ              168000000UL
 #define STM32_CYCLES_PER_LOOP       10
 
+// PWM macros
 #define PULSE_ONE_MS                4400
-#define PULSE_ONE_PERCENT           45
+#define PULSE_ONE_PERCENT           44
+#define RIGHT_MOTOR_FUNC            TIM_SetCompare1     //PB6
+#define LEFT_MOTOR_FUNC             TIM_SetCompare2      //PB7
+#define BACK_MOTOR_FUNC             TIM_SetCompare3      //PB8
+#define FRONT_MOTOR_FUNC            TIM_SetCompare4      //PB9
 
 // led macros
 #define GPIO_LED                    GPIOD
@@ -24,6 +29,7 @@
 //Acc Address: 0011001
 //Mag Address: 0011110
 
+// IMU macros
 #define IMU_GYRO_ADDR               0b1101011
 #define IMU_ACCEL_ADDR              0b0011001
 #define IMU_MAG_ADDR                0b0011110
