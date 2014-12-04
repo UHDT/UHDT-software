@@ -1,0 +1,5 @@
+- Add delay parameter to run_motor function
+- Rename run_motor to something better
+- Add run_motor function that increment by a %
+- make functions more versatile using MACROS
+    for example: #define GPIOX GPIOA
