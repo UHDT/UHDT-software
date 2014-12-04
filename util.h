@@ -5,15 +5,15 @@
 #include "stm32f4xx.h"
 #include "stm32f4xx_rcc.h"
 
-static __IO uint32_t util_timing_delay;
+static __IO uint32_t        util_timing_delay;
 /**
  * This variable can be used in main
  * It is automatically increased every time systick make an interrupt
  */
-static __IO uint32_t util_time;
-static __IO uint32_t util_time2;
+static __IO uint32_t        util_time;
+static __IO uint32_t        util_time2;
 
-void util_leds_init();
+void                        util_leds_init();
 
 /*
 How to use Timer:
@@ -35,14 +35,14 @@ int main()
     }
 }
 */
-void util_delay_init(void);
-void util_delay_ms(__IO uint32_t nTime);
-void util_delay_ns(__IO uint32_t nTime);
-uint32_t util_delay_time(void);
-void util_delay_set_time(uint32_t time);
-uint32_t util_delay_time2(void);
-void util_delay_set_time2(uint32_t time);
-void util_delay_enable_systick(void);
-void util_delay_disable_systick(void);
+void                        util_delay_init(void);
+void                        util_delay_ms(__IO uint32_t nTime);
+void                        util_delay_ns(__IO uint32_t nTime);
+uint32_t                    util_delay_time(void);
+void                        util_delay_set_time(uint32_t time);
+uint32_t                    util_delay_time2(void);
+void                        util_delay_set_time2(uint32_t time);
+void                        util_delay_enable_systick(void);
+void                        util_delay_disable_systick(void);
 
 #endif /* UTIL_H_INCLUDED */

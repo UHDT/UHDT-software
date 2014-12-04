@@ -12,10 +12,20 @@
 // PWM macros
 #define PULSE_ONE_MS                4700
 #define PULSE_ONE_PERCENT           47
+
 #define RIGHT_MOTOR_FUNC            TIM_SetCompare1     //PB6
+#define RIGHT_MOTOR_PULSE           4700
+
 #define LEFT_MOTOR_FUNC             TIM_SetCompare2      //PB7
+#define LEFT_MOTOR_PULSE            4700
+
 #define BACK_MOTOR_FUNC             TIM_SetCompare3      //PB8
+#define BACK_MOTOR_PULSE            4700
+
 #define FRONT_MOTOR_FUNC            TIM_SetCompare4      //PB9
+#define FRONT_MOTOR_PULSE           4700
+
+#define P_ROLL                      25
 
 // led macros
 #define GPIO_LED                    GPIOD

@@ -26,16 +26,16 @@ typedef struct Angle
     float yaw;
 } Angle;
 
-void                                imu_configure_gyro();
-void                                imu_configure_accelerometer();
-void                                imu_configure_mag();
-float                               imu_read_gyro(uint8_t reg_h, uint8_t reg_l);
-float                               imu_read_accelerometer(uint8_t reg_h, uint8_t reg_l);
-float                               imu_read_mag(uint8_t reg_h, uint8_t reg_l);
+void                        imu_configure_gyro();
+void                        imu_configure_accelerometer();
+void                        imu_configure_mag();
+float                       imu_read_gyro(uint8_t reg_h, uint8_t reg_l);
+float                       imu_read_accelerometer(uint8_t reg_h, uint8_t reg_l);
+float                       imu_read_mag(uint8_t reg_h, uint8_t reg_l);
 
-void                                imu_fill_gyro_data(Gyro *gyro);
-void                                imu_fill_mag_data(Mag *mag);
-void                                imu_fill_accel_data(Accel *acc);
-void                                imu_fill_angle_data(Angle *ang, Gyro *gyro, Mag *mag, Accel *acc);
+void                        imu_fill_gyro_data(Gyro *gyro);
+void                        imu_fill_mag_data(Mag *mag);
+void                        imu_fill_accel_data(Accel *acc);
+void                        imu_fill_angle_data(Angle *ang, Gyro *gyro, Mag *mag, Accel *acc);
 
 #endif /* IMU_H_INCLUDED */

@@ -6,6 +6,7 @@
 #include "interrupts.h"
 #include "imu.h"
 #include "globals.h"
+#include "pwm.h"
 
 void int_init()
 {
@@ -49,24 +50,19 @@ void TIM2_IRQHandler()
         imu_fill_mag_data(&g_mag);
         imu_fill_accel_data(&g_accel);
         imu_fill_angle_data(&g_ang, &g_gyro, &g_mag, &g_accel);
-        int roll_difference = (g_ang.comp_x - g_roll_setpoint) * 25;
+        int roll_difference = (g_ang.comp_x - g_roll_setpoint) * P_ROLL;
         int left_motor = PULSE_ONE_MS + 1500;
         int right_motor = PULSE_ONE_MS + 800;
-        // increment or decrement each motors value
 
+        // increment or decrement each motors value
         left_motor += roll_difference;
         right_motor -= roll_difference;
+
         // cap off the values
-        if (left_motor > PULSE_ONE_MS*2) {
-            left_motor = PULSE_ONE_MS*2;
-        } else if (left_motor < PULSE_ONE_MS) {
-            left_motor = PULSE_ONE_MS;
-        }
-        if (right_motor > PULSE_ONE_MS*2) {
-            right_motor = PULSE_ONE_MS*2;
-        } else if (right_motor < PULSE_ONE_MS) {
-            right_motor = PULSE_ONE_MS;
-        }
+        pwm_cap_value(&left_motor, PULSE_ONE_MS, PULSE_ONE_MS*2);
+        pwm_cap_value(&right_motor, PULSE_ONE_MS, PULSE_ONE_MS*2);
+
+        // change the motor speeds
         pwm_inc_to_value(&g_left_motor, left_motor, &LEFT_MOTOR_FUNC);
         pwm_inc_to_value(&g_right_motor, right_motor, &RIGHT_MOTOR_FUNC);
 
