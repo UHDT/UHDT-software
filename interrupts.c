@@ -49,25 +49,26 @@ void TIM2_IRQHandler()
         imu_fill_mag_data(&g_mag);
         imu_fill_accel_data(&g_accel);
         imu_fill_angle_data(&g_ang, &g_gyro, &g_mag, &g_accel);
-        int roll_difference = (g_ang.comp_x - g_roll_setpoint) * 10;
+        int roll_difference = (g_ang.comp_x - g_roll_setpoint) * 25;
+        int left_motor = PULSE_ONE_MS + 1500;
+        int right_motor = PULSE_ONE_MS + 800;
         // increment or decrement each motors value
-        if (roll_difference < 0) {
-            g_left_motor += roll_difference;
-            g_right_motor -= roll_difference;
-        } else {
-            g_left_motor -= roll_difference;
-            g_right_motor += roll_difference;
-        }
+
+        left_motor += roll_difference;
+        right_motor -= roll_difference;
         // cap off the values
-        if (g_left_motor > PULSE_ONE_MS*2) {
-            g_left_motor = PULSE_ONE_MS*2;
-        } else if (g_left_motor < PULSE_ONE_MS) {
-            g_left_motor = PULSE_ONE_MS;
+        if (left_motor > PULSE_ONE_MS*2) {
+            left_motor = PULSE_ONE_MS*2;
+        } else if (left_motor < PULSE_ONE_MS) {
+            left_motor = PULSE_ONE_MS;
         }
-        if (g_right_motor > PULSE_ONE_MS*2) {
-            g_right_motor = PULSE_ONE_MS*2;
-        } else if (g_right_motor < PULSE_ONE_MS) {
-            g_right_motor = PULSE_ONE_MS;
+        if (right_motor > PULSE_ONE_MS*2) {
+            right_motor = PULSE_ONE_MS*2;
+        } else if (right_motor < PULSE_ONE_MS) {
+            right_motor = PULSE_ONE_MS;
         }
+        pwm_inc_to_value(&g_left_motor, left_motor, &LEFT_MOTOR_FUNC);
+        pwm_inc_to_value(&g_right_motor, right_motor, &RIGHT_MOTOR_FUNC);
+
     }
 }

@@ -138,7 +138,7 @@ void pwm_pins_init() {
     GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
-void pwm_percent_motor(int *motor, int percent, MotorFunction motor_func)
+void pwm_inc_to_percent(int *motor, int percent, MotorFunction motor_func)
 {
     // pwm_value we want to go to
     int pwm_value = PULSE_ONE_MS + percent * PULSE_ONE_PERCENT;
@@ -154,7 +154,7 @@ void pwm_percent_motor(int *motor, int percent, MotorFunction motor_func)
     }
 }
 
-void pwm_increment_motor(int *motor, int percent, MotorFunction motor_func)
+void pwm_inc_by_percent(int *motor, int percent, MotorFunction motor_func)
 {
     int pwm_value = percent*PULSE_ONE_PERCENT;
     int final_pwm = *motor + pwm_value;
@@ -174,6 +174,37 @@ void pwm_increment_motor(int *motor, int percent, MotorFunction motor_func)
     }
 }
 
+void pwm_inc_to_value(int *motor, int pwm_value, MotorFunction motor_func)
+{
+    // how much to increment motors by
+    int increment = pwm_value > *motor ? 1 : -1;
+    int pwm_difference = abs(pwm_value - *motor);
+    int i = 0;
+    // increment motor values to certain given percentage
+    for (i = 0; i < pwm_difference; ++i)
+    {
+        *motor += increment;
+        motor_func(TIM4, *motor);
+    }
+}
 
+void pwm_inc_by_value(int *motor, int pwm_value, MotorFunction motor_func)
+{
+    int final_pwm = *motor + pwm_value;
+
+    if (final_pwm > PULSE_ONE_MS*2) {
+        pwm_value = PULSE_ONE_MS*2;
+    } else if (final_pwm < PULSE_ONE_MS) {
+        pwm_value = PULSE_ONE_MS;
+    }
+    int increment = pwm_value < 0 ? -1 : 1;
+
+    int i = 0;
+    for (i = 0; i < pwm_value; ++i)
+    {
+        *motor += increment;
+        motor_func(TIM4, *motor);
+    }
+}
 
 

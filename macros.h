@@ -10,8 +10,8 @@
 #define STM32_CYCLES_PER_LOOP       10
 
 // PWM macros
-#define PULSE_ONE_MS                4400
-#define PULSE_ONE_PERCENT           44
+#define PULSE_ONE_MS                4700
+#define PULSE_ONE_PERCENT           47
 #define RIGHT_MOTOR_FUNC            TIM_SetCompare1     //PB6
 #define LEFT_MOTOR_FUNC             TIM_SetCompare2      //PB7
 #define BACK_MOTOR_FUNC             TIM_SetCompare3      //PB8
