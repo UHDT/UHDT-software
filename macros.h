@@ -24,10 +24,10 @@
 #define PWM4_PIN_SOURCE             GPIO_PinSource9
 
 #define RIGHT_MOTOR_FUNC            TIM_SetCompare1     //PB6
-#define RIGHT_MOTOR_PULSE           4700
+#define RIGHT_MOTOR_PULSE           4600
 
 #define LEFT_MOTOR_FUNC             TIM_SetCompare2      //PB7
-#define LEFT_MOTOR_PULSE            4700
+#define LEFT_MOTOR_PULSE            5000
 
 #define BACK_MOTOR_FUNC             TIM_SetCompare3      //PB8
 #define BACK_MOTOR_PULSE            4700
@@ -36,6 +36,7 @@
 #define FRONT_MOTOR_PULSE           4700
 
 #define P_ROLL                      25
+#define D_ROLL                      5
 
 // led macros
 #define GPIO_LED                    GPIOD

@@ -17,6 +17,7 @@ void global_init();
     Gyro                            g_gyro;
     Angle                           g_ang;
     int                             g_roll_setpoint;
+    int                             g_roll_p_setpoint;
 
     // used for roll (x-axis)
     Motor                           g_right_motor = { .PULSE_VALUE = RIGHT_MOTOR_PULSE, .MOTOR_FUNC = &RIGHT_MOTOR_FUNC };
@@ -31,6 +32,7 @@ void global_init();
     extern Gyro                     g_gyro;
     extern Angle                    g_ang;
     extern int                      g_roll_setpoint;
+    extern int                      g_roll_p_setpoint;
     extern Motor                    g_right_motor;
     extern Motor                    g_left_motor;
     extern Motor                    g_back_motor;

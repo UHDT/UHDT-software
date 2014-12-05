@@ -42,29 +42,39 @@ void int_enable_interrupt()
 
 void TIM2_IRQHandler()
 {
+    static int counter = 0;
     if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
     {
         TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
         GPIO_ToggleBits(GPIO_LED, LED1_PIN);
+
         imu_fill_gyro_data(&g_gyro);
         imu_fill_mag_data(&g_mag);
         imu_fill_accel_data(&g_accel);
         imu_fill_angle_data(&g_ang, &g_gyro, &g_mag, &g_accel);
-        int roll_difference = (g_ang.comp_x - g_roll_setpoint) * P_ROLL;
-        int left_motor = g_left_motor.PULSE_VALUE + 1500;
-        int right_motor = g_right_motor.PULSE_VALUE + 800;
+        int p_value = (g_ang.comp_x - g_roll_setpoint) * P_ROLL;
+        int d_value = (g_ang.comp_x - g_roll_p_setpoint) * D_ROLL;
+        printf("%d\n", d_value);
+
+        int left_motor = g_left_motor.PULSE_VALUE + 1000;
+        int right_motor = g_right_motor.PULSE_VALUE + 1000;
 
         // increment or decrement each motors value
-        left_motor += roll_difference;
-        right_motor -= roll_difference;
+        left_motor += p_value + d_value;
+        right_motor -= p_value + d_value;
 
         // cap off the values
-        pwm_cap_value(&left_motor, PULSE_ONE_MS, PULSE_ONE_MS*2);
-        pwm_cap_value(&right_motor, PULSE_ONE_MS, PULSE_ONE_MS*2);
+        pwm_cap_value(&left_motor, g_left_motor.PULSE_VALUE, g_left_motor.PULSE_VALUE*2);
+        pwm_cap_value(&right_motor, g_right_motor.PULSE_VALUE, g_right_motor.PULSE_VALUE*2);
 
         // change the motor speeds
         pwm_inc_to_value(&g_left_motor, left_motor);
         pwm_inc_to_value(&g_right_motor, right_motor);
-
+        if (counter >= 3)
+        {
+            g_roll_p_setpoint = g_ang.comp_x;
+            counter = 0;
+        }
+        counter++;
     }
 }
