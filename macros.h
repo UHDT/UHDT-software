@@ -35,7 +35,7 @@
 #define FRONT_MOTOR_FUNC            TIM_SetCompare4      //PB9
 #define FRONT_MOTOR_PULSE           4700
 
-#define P_ROLL                      25
+#define P_ROLL                      10
 #define D_ROLL                      5
 
 // led macros

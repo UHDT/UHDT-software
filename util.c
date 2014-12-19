@@ -30,6 +30,9 @@ void SysTick_Handler(void) {
 #endif
 
 
+// Initialize the GPIO pins for the LEDs.
+// @param: none
+// @return: none
 void util_leds_init()
 {
     GPIO_InitTypeDef GPIO_InitStruct;
@@ -45,19 +48,43 @@ void util_leds_init()
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_Init(GPIO_LED, &GPIO_InitStruct);
 }
+// Cap a value within a certain range.
+// @param: value - the value that you want to cap
+// @param: minimum - the minimum value that you can go to
+// @param: maximum - the maximum value that you want to go to
+// @return: none
+void util_cap_value(int *value, int minimum, int maximum)
+{
+    if (*value > maximum) {
+        *value = maximum;
+    } else if (*value < minimum) {
+        *value = minimum;
+    }
+}
 
+// Delay for a certain amount of nanoseconds. This only works
+// if you set the clock to 180MHz.
+// @param: nTime - the amount of nanoseconds you want to delay
+// @return: none
 void util_delay_ns(__IO uint32_t nTime) {
 	util_timing_delay = nTime;
 
 	while (util_timing_delay != 0);
 }
 
-void util_delay_ms(__IO uint32_t nTime) {
-	util_timing_delay = 1000 * nTime;
+// Delay for a certain amount of milliseconds. This only works
+// if you set the clock to 180MHz.
+// @param: mTime - number of milliseconds you want to delay
+// @return: none
+void util_delay_ms(__IO uint32_t mTime) {
+	util_timing_delay = 1000 * mTime;
 
 	while (util_timing_delay != 0);
 }
 
+// Initialize the delay functions.
+// @param: none
+// @return: none
 void util_delay_init(void) {
 	if (util_delay_initialized) {
 		return;
@@ -72,35 +99,39 @@ void util_delay_init(void) {
 	util_delay_initialized = 1;
 }
 
-/**
- * Get the util_time variable value
- */
+// Gives you the current time (time 1). Used to do stuff every
+// x amount of time.
+// @param: none
+// @return: the current time (time 1)
 uint32_t util_delay_time(void) {
 	return util_time;
 }
 
-/**
- * Get the util_time variable value
- */
+// Gives you the current time (time 2). Used to do stuff every
+// x amount of time.
+// @param: none
+// @return: the current time (time 2)
 uint32_t util_delay_time2(void) {
 	return util_time2;
 }
-/**
- * Set value for util_time variable
- */
+
+// Set the current time (time 1)
+// @param: time you want to set current time to (time 1)
+// @return: none;
 void util_delay_set_time(uint32_t time) {
 	util_time = time;
 }
-/**
- * Set value for util_time variable
- */
+
+// Set the current time (time 2)
+// @param: time you want to set current time to (time 2)
+// @return: none;
 void util_delay_set_time2(uint32_t time) {
 	util_time2 = time;
 }
 
-/**
- * Re-enable Systick. It has to be configured before with util_delay_init();
- */
+// Re-enable Systick. It has to be configured before with util_delay_init();
+// @param: none
+// @return: none
 void util_delay_enable_systick(void) {
 	if (!util_delay_initialized) {
 		return;
@@ -110,9 +141,9 @@ void util_delay_enable_systick(void) {
 	SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk;
 }
 
-/**
- * Disable Systick. Usef when going into sleep mode, so systick will not
- */
+// Disable Systick. Usef when going into sleep mode, so systick will not
+// @param: none
+// @return: none
 void util_delay_disable_systick(void) {
 	/* Disable systick, useful when you go to sleep mode */
 	SysTick->CTRL &= ~SysTick_CTRL_TICKINT_Msk;

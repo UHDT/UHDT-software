@@ -36,6 +36,7 @@ int main()
 }
 */
 void                        util_delay_init(void);
+void                        uitl_cap_value(int *value, int min, int max);
 void                        util_delay_ms(__IO uint32_t nTime);
 void                        util_delay_ns(__IO uint32_t nTime);
 uint32_t                    util_delay_time(void);
@@ -44,5 +45,6 @@ uint32_t                    util_delay_time2(void);
 void                        util_delay_set_time2(uint32_t time);
 void                        util_delay_enable_systick(void);
 void                        util_delay_disable_systick(void);
+
 
 #endif /* UTIL_H_INCLUDED */

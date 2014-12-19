@@ -1,6 +1,9 @@
 #include "globals.h"
 #include "macros.h"
 
+// Initializes global variables
+// @param: none
+// @return: none
 void global_init()
 {
     g_gyro.x_ang = 0;

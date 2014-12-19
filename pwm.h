@@ -16,7 +16,6 @@ void                        pwm_init();
 void                        pwm_timer_init();
 void                        pwm_channel_init();
 void                        pwm_pins_init();
-void                        pwm_cap_value(int *pwm_value, int min, int max);
 
 void                        pwm_inc_to_value(Motor *motor, int value);
 void                        pwm_inc_by_value(Motor *motor, int value);

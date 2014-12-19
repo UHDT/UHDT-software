@@ -9,6 +9,10 @@
 //slave address of accelerometer = 0b0011001
 //slave address of magnetometer = 0b0011110
 
+// Initialize the I2C clockspeed, mode, duty, etc. Initializes the
+// pins that are needed for the I2C. Initializes the clocks as well.
+// @param: none
+// @return: none
 void i2c_init()
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -47,6 +51,13 @@ void i2c_init()
 	I2C_Cmd(I2C2, ENABLE);
 }
 
+
+// Start the I2C transfer by sending the slave a start signal as well
+// as an address.
+// @param: I2Cx - which I2C you are going to be using
+// @param: address - the address of the slave
+// @param: direction - specify if it is a transmit or a receive
+// @return: none
 void i2c_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction)
 {
 	// wait until I2C1 is not busy any more
@@ -58,7 +69,7 @@ void i2c_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction)
 	// wait for I2C1 Slave to acknowledge start condition
 	while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_MODE_SELECT));
 
-	// Send slave Address for write
+	// Send slave Address for
 	I2C_Send7bitAddress(I2Cx, address, direction);
 
 	/* wait for I2Cx EV6, check if
@@ -74,6 +85,10 @@ void i2c_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction)
 	}
 }
 
+// Write data to a slave
+// @param: I2Cx - which I2C we are referring to
+// @param: data - the data that we want to write
+// @return: none
 void i2c_write(I2C_TypeDef* I2Cx, uint8_t data)
 {
 	I2C_SendData(I2Cx, data);
@@ -82,9 +97,9 @@ void i2c_write(I2C_TypeDef* I2Cx, uint8_t data)
 }
 
 
-/* This function reads one byte from the slave device
- * and acknowledges the byte (requests another byte)
- */
+// Reads one byte from the slave device and acknowledges the byte (requests another byte)
+// @param: I2Cx - which I2C we are referring to
+// @return: none
 uint8_t i2c_read_ack(I2C_TypeDef* I2Cx){
 	// enable acknowledge of received data
 	I2C_AcknowledgeConfig(I2Cx, ENABLE);
@@ -95,6 +110,9 @@ uint8_t i2c_read_ack(I2C_TypeDef* I2Cx){
 	return data;
 }
 
+// Reads one byte from the slave, but doesn't care about acknowledging
+// @param: I2Cx - which I2C we are referring to
+// @return: none
 uint8_t i2c_read_nack(I2C_TypeDef* I2Cx)
 {
 	// disable acknowledge of received data
@@ -109,6 +127,9 @@ uint8_t i2c_read_nack(I2C_TypeDef* I2Cx)
 	return data;
 }
 
+// Sends a signal telling the I2C that we are done
+// @param: I2Cx - which I2C we are referring to
+// @return: none
 void i2c_stop(I2C_TypeDef* I2Cx)
 {
 	// Send I2C1 STOP Condition after last byte has been transmitted

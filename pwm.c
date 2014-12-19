@@ -15,13 +15,9 @@
 // Make it so that you can just say what frequency and period (within a range)
 
 
-void pwm_init()
-{
-    pwm_timer_init();
-    pwm_pins_init();
-    pwm_channel_init();
-}
-
+/////////////////////////////
+//  HOW TO SETUP THE TIMER://
+/////////////////////////////
 //  TIM4 is connected to APB1 bus, which has on F407 device 42MHz clock
 //  But, timer has internal PLL, which double this frequency for timer, up to 84MHz
 //  Remember: Not each timer is connected to APB1, there are also timers connected
@@ -56,25 +52,9 @@ void pwm_init()
 //  If you get TIM_Period larger than max timer value (in our case 65535),
 //  you have to choose larger prescaller and slow down timer tick frequency
 
-void pwm_timer_init() {
-    TIM_TimeBaseInitTypeDef TIM_BaseStruct;
-
-    /* Enable clock for TIM4 */
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
-
-    TIM_BaseStruct.TIM_Prescaler = 19; // prev 5
-    /* Count up */
-    TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
-    TIM_BaseStruct.TIM_Period = 65535; // prev 65535
-    TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
-    TIM_BaseStruct.TIM_RepetitionCounter = 0;
-    /* Initialize TIM4 */
-    TIM_TimeBaseInit(TIM4, &TIM_BaseStruct);
-    /* Start count on TIM4 */
-    TIM_Cmd(TIM4, ENABLE);
-}
-
-
+////////////////////////////////////////
+//  HOW TO SETUP THE PWM DUTY CYCLE: //
+///////////////////////////////////////
 //  Common settings
 //
 //  PWM mode 2 = Clear on compare match
@@ -94,6 +74,45 @@ void pwm_timer_init() {
 //
 //  Remember: if pulse_length is larger than TIM_Period, you will have output HIGH all the time
 
+
+
+// Initializes the pwm settings for the motors. The GPIOs get initialized,
+// the timer gets initialized, and the pwm channels get initialized.
+// @param: none
+// @return: none
+void pwm_init()
+{
+    pwm_timer_init();
+    pwm_pins_init();
+    pwm_channel_init();
+}
+
+// Initialize the pwm timer. Important for setting the period and
+// frequency (needed for pwm).
+// @param: none
+// @return: none
+void pwm_timer_init() {
+    TIM_TimeBaseInitTypeDef TIM_BaseStruct;
+
+    /* Enable clock for TIM4 */
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+
+    TIM_BaseStruct.TIM_Prescaler = 19;
+    /* Count up */
+    TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_BaseStruct.TIM_Period = 65535;
+    TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+    TIM_BaseStruct.TIM_RepetitionCounter = 0;
+    /* Initialize TIM4 */
+    TIM_TimeBaseInit(TIM4, &TIM_BaseStruct);
+    /* Start count on TIM4 */
+    TIM_Cmd(TIM4, ENABLE);
+}
+
+// Initialize the channels for pwm. The channels control the pulse
+// of the pwm. This is needed to get pwm working.
+// @param: none
+// @return: none
 void pwm_channel_init() {
     TIM_OCInitTypeDef TIM_OCStruct;
     TIM_OCStruct.TIM_OCMode = TIM_OCMode_PWM2;
@@ -118,6 +137,9 @@ void pwm_channel_init() {
 
 }
 
+// Initialize the proper GPIO pins to work with the corresponding timers.
+// @param: none
+// @return: none
 void pwm_pins_init() {
     GPIO_InitTypeDef GPIO_InitStruct;
 
@@ -138,17 +160,12 @@ void pwm_pins_init() {
     GPIO_Init(GPIO_PWM, &GPIO_InitStruct);
 }
 
-void pwm_cap_value(int *pwm_value, int min, int max)
-{
-    if (*pwm_value > max) {
-        *pwm_value = max;
-    } else if (*pwm_value < min) {
-        *pwm_value = min;
-    }
-}
-
+// Increment the pwm value of the corresponding motor to a
+// certain pwm value. There is no check for the going over
+// the maximum pwm value.
 void pwm_inc_to_value(Motor *motor, int pwm_value)
 {
+
     // how much to increment motors by
     int increment = pwm_value > motor->pwm_value ? 1 : -1;
     int pwm_difference = abs(pwm_value - motor->pwm_value);
@@ -161,24 +178,24 @@ void pwm_inc_to_value(Motor *motor, int pwm_value)
     }
 }
 
+// Increment the pwm value of the corresponding motor by
+// a given amount. Also, it makes sure that it caps.
+// @param: motor - the motor that you want to increment.
+// @param: pwm_value - the amount that you want to increment the motor's
+//                     pwm value.
+// @return: none
+
 void pwm_inc_by_value(Motor *motor, int pwm_value)
 {
-    int final_pwm = motor->pwm_value + pwm_value;
-
-    pwm_cap_value(&(motor->pwm_value), motor->PULSE_VALUE, motor->PULSE_VALUE*2);
-    if (final_pwm > motor->PULSE_VALUE*2) {
-        pwm_value = motor->PULSE_VALUE*2;
-    } else if (final_pwm < motor->PULSE_VALUE) {
-        pwm_value = motor->PULSE_VALUE;
-    }
     int increment = pwm_value < 0 ? -1 : 1;
 
     int i = 0;
-    for (i = 0; i < pwm_value; ++i)
+    for (i = 0; i < abs(pwm_value); ++i)
     {
         motor->pwm_value += increment;
         motor->MOTOR_FUNC(TIM4, motor->pwm_value);
     }
+    util_cap_value(&(motor->pwm_value), motor->PULSE_VALUE, motor->PULSE_VALUE*2);
 }
 
 /*

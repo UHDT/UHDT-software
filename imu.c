@@ -13,6 +13,9 @@
 //Acc Address: 0011001
 //Mag Address: 0011110
 
+// Configure the imu's gyro to the right settings by sending it values via I2C.
+// @param: none
+// @return: none
 void imu_configure_gyro()
 {
 	i2c_start(I2C2, IMU_GYRO_ADDR<<1, I2C_Direction_Transmitter); // start a transmission in Master transmitter mode
@@ -31,6 +34,9 @@ void imu_configure_gyro()
 	i2c_stop(I2C2); // stop the transmission
 }
 
+// Configure the imu's accelerometer to the right settings by sending it values via I2C.
+// @param: none
+// @return: none
 void imu_configure_accelerometer()
 {
 	i2c_start(I2C2, IMU_ACCEL_ADDR<<1, I2C_Direction_Transmitter); // start a transmission in Master transmitter mode
@@ -49,6 +55,10 @@ void imu_configure_accelerometer()
 	i2c_stop(I2C2); // stop the transmission
 }
 
+
+// Configure the imu's magnetometer to the right settings by sending it values via I2C.
+// @param: none
+// @return: none
 void imu_configure_mag()
 {
 	i2c_start(I2C2, IMU_GYRO_ADDR<<1, I2C_Direction_Transmitter); // start a transmission in Master transmitter mode
@@ -67,6 +77,10 @@ void imu_configure_mag()
 	i2c_stop(I2C2); // stop the transmission
 }
 
+// Read the gyro data from the IMU
+// @param: reg_h - gyro's MSB
+// @param: reg_l - gyro's LSB
+// @return: the gyro data
 float imu_read_gyro(uint8_t reg_h,uint8_t reg_l)
 {
 	int16_t raw_gyro;
@@ -94,7 +108,11 @@ float imu_read_gyro(uint8_t reg_h,uint8_t reg_l)
 
 }
 
-float imu_read_accelerometer(uint8_t reg_h,uint8_t reg_l)
+// Read the accelerometer data from the IMU
+// @param: reg_h - accels's MSB
+// @param: reg_l - accels's LSB
+// @return: the accel data
+float imu_read_accelerometer(uint8_t reg_h, uint8_t reg_l)
 {
 	int16_t raw_acc;
 	float rate_acc; //m/s^2
@@ -119,6 +137,10 @@ float imu_read_accelerometer(uint8_t reg_h,uint8_t reg_l)
 	return rate_acc;
 }
 
+// Read the magnetometer data from the IMU
+// @param: reg_h - mags's MSB
+// @param: reg_l - mags's LSB
+// @return: the mag data
 float imu_read_mag(uint8_t reg_h, uint8_t reg_l)
 {
 	int16_t raw_mag;
@@ -147,6 +169,10 @@ float imu_read_mag(uint8_t reg_h, uint8_t reg_l)
 	return position;
 }
 
+// Reads gyro data from the IMU, converts it to usable data, then stores
+// it.
+// @param: gyro - where the usable data will be stored
+// @return: none
 void imu_fill_gyro_data(Gyro *gyro)
 {
     float dt = .085;
@@ -161,6 +187,10 @@ void imu_fill_gyro_data(Gyro *gyro)
     gyro->z_ang += gyro->z*dt;
 }
 
+// Reads magnetometer data from the IMU, converts it to usable data, then stores
+// it.
+// @param: mag - where the usable data will be stored
+// @return: none
 void imu_fill_mag_data(Mag *mag)
 {
     //Read magnetometer x, y, z axes
@@ -170,6 +200,10 @@ void imu_fill_mag_data(Mag *mag)
 
 }
 
+// Reads accelerometer data from the IMU, converts it to usable data, then stores
+// it.
+// @param: acc - where the usable data will be stored
+// @return: none
 void imu_fill_accel_data(Accel *acc)
 {
     //Read accelerometer x, y, z axes
@@ -183,6 +217,12 @@ void imu_fill_accel_data(Accel *acc)
     acc->z_ang = (180/PI*atan2f((sqrtf(acc->x*acc->x+acc->y*acc->y)),(float)acc->z));
 }
 
+// Takes the data from the gyro, accelerometer, and magnetometer and converts it
+// into usable angle data
+// @param: ang - where all the data will be stored
+// @param: gyro - contains all the gyro data used in calculations
+// @param: mag - contains all the mag data used in calculations
+// @param: acc - contains all the accel data used in calculations
 void imu_fill_angle_data(Angle *ang, Gyro *gyro, Mag *mag, Accel *acc)
 {
     float xh, yh;

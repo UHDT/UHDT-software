@@ -27,6 +27,7 @@
 int main(void)
 {
     SystemInit();
+
     util_delay_init();
     util_delay_enable_systick();
     util_leds_init();
@@ -42,12 +43,12 @@ int main(void)
     util_delay_ms(3000);
     int_init();
 
-//    int right_pwm = g_right_motor.PULSE_VALUE;
-//    int left_pwm = g_left_motor.PULSE_VALUE;
-//    printf("%d\n", left_pwm);
-//    pwm_inc_to_value(&g_left_motor, g_left_motor.PULSE_VALUE+300);
-//    util_delay_ms(5000);
-//    pwm_inc_to_value(&g_right_motor, g_right_motor.PULSE_VALUE+400);
+    int right_pwm = g_right_motor.PULSE_VALUE;
+    int left_pwm = g_left_motor.PULSE_VALUE;
+    printf("%d\n", left_pwm);
+    pwm_inc_to_value(&g_left_motor, g_left_motor.PULSE_VALUE+300);
+    util_delay_ms(5000);
+    pwm_inc_to_value(&g_right_motor, g_right_motor.PULSE_VALUE+400);
     util_delay_set_time(0);
     while (1) {
 
