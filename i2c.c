@@ -23,29 +23,29 @@ void i2c_init()
 	// enable clock for SCL and SDA pins
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 
-	/* setup SCL and SDA pins
-	 * 1. SCL on PB6
-	 * 2. SDA on PB9
-	 */
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11; // we are going to use PB10 and PB11
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;			  // set pins to alternate function
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;	      // set GPIO speed
-	GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;			  // set output to open drain --> the line has to be only pulled low, not driven high
-	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;			  // enable pull up resistors
-	GPIO_Init(GPIOB, &GPIO_InitStruct);					  // init GPIOB
+	// setup SCL and SDA pins
+	// 1. SCL on PB10
+	// 2. SDA on PB11
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;     // we are going to use PB10 and PB11
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;			            // set pins to alternate function
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;	          // set GPIO speed
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_OD;			          // set output to open drain --> the line has to be only
+                                                            //                              pulled low, not driven high
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;			            // enable pull up resistors
+	GPIO_Init(GPIOB, &GPIO_InitStruct);					              // init GPIOB
 
 	// Connect I2C1 pins to AF
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_I2C2);	// SCL
-	GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_I2C2);    // SDA
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_I2C2);  // SDA
 
 	// configure I2C1
-	I2C_InitStruct.I2C_ClockSpeed = 100000; 		// 100kHz
-	I2C_InitStruct.I2C_Mode = I2C_Mode_I2C;			// I2C mode
-	I2C_InitStruct.I2C_DutyCycle = I2C_DutyCycle_2;	// 50% duty cycle --> standard
-	I2C_InitStruct.I2C_OwnAddress1 = 0x00;			// own address, not relevant in master mode
-	I2C_InitStruct.I2C_Ack = I2C_Ack_Disable;		// disable acknowledge when reading (can be changed later on)
+	I2C_InitStruct.I2C_ClockSpeed = 100000; 		              // 100kHz
+	I2C_InitStruct.I2C_Mode = I2C_Mode_I2C;			              // I2C mode
+	I2C_InitStruct.I2C_DutyCycle = I2C_DutyCycle_2;	          // 50% duty cycle --> standard
+	I2C_InitStruct.I2C_OwnAddress1 = 0x00;			              // own address, not relevant in master mode
+	I2C_InitStruct.I2C_Ack = I2C_Ack_Disable;		              // disable acknowledge when reading (can be changed later on)
 	I2C_InitStruct.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit; // set address length to 7 bit addresses
-	I2C_Init(I2C2, &I2C_InitStruct);				// init I2C1
+	I2C_Init(I2C2, &I2C_InitStruct);				                  // init I2C1
 
 	// enable I2C1
 	I2C_Cmd(I2C2, ENABLE);
@@ -72,11 +72,10 @@ void i2c_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction)
 	// Send slave Address for
 	I2C_Send7bitAddress(I2Cx, address, direction);
 
-	/* wait for I2Cx EV6, check if
-	 * either Slave has acknowledged Master transmitter or
-	 * Master receiver mode, depending on the transmission
-	 * direction
-	 */
+	// wait for I2Cx EV6, check if
+	// either Slave has acknowledged Master transmitter or
+	// Master receiver mode, depending on the transmission
+	// direction
 	if(direction == I2C_Direction_Transmitter){
 		while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
 	}

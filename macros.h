@@ -23,7 +23,9 @@
 #define PWM3_PIN_SOURCE             GPIO_PinSource8
 #define PWM4_PIN_SOURCE             GPIO_PinSource9
 
-#define RIGHT_MOTOR_FUNC            TIM_SetCompare1     //PB6
+// Motor functions and inital PULSE value for each corresponding
+// motor
+#define RIGHT_MOTOR_FUNC            TIM_SetCompare1      //PB6
 #define RIGHT_MOTOR_PULSE           4600
 
 #define LEFT_MOTOR_FUNC             TIM_SetCompare2      //PB7
@@ -35,6 +37,7 @@
 #define FRONT_MOTOR_FUNC            TIM_SetCompare4      //PB9
 #define FRONT_MOTOR_PULSE           4700
 
+// P & D gains for roll --> must be adjusted
 #define P_ROLL                      10
 #define D_ROLL                      5
 

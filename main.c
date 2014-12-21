@@ -43,15 +43,7 @@ int main(void)
     util_delay_ms(3000);
     int_init();
 
-    int right_pwm = g_right_motor.PULSE_VALUE;
-    int left_pwm = g_left_motor.PULSE_VALUE;
-    printf("%d\n", left_pwm);
-    pwm_inc_to_value(&g_left_motor, g_left_motor.PULSE_VALUE+300);
-    util_delay_ms(5000);
-    pwm_inc_to_value(&g_right_motor, g_right_motor.PULSE_VALUE+400);
-    util_delay_set_time(0);
     while (1) {
-
 //        printf("gyro: %d %d %d\n", (int)g_gyro.x_ang, (int)g_gyro.y_ang, (int)g_gyro.z_ang);
 //        printf("mag: %d %d %d\n", (int)mag.x, (int)mag.y, (int)mag.z);
 //        printf("accel: %d %d %d\n", (int)accel.x_ang, (int)accel.y_ang, (int)accel.z_ang);

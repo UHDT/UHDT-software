@@ -3,23 +3,27 @@
 
 #include <stdint.h>
 
+// Accelerometer data (readings should go here)
 typedef struct Accel
 {
     int x, y, z;
     float x_ang, y_ang, z_ang;
 } Accel;
 
+// Gyrometer data (readings should go here)
 typedef struct Gyro
 {
     float x, y, z;
     float x_ang, y_ang, z_ang;
 } Gyro;
 
+// Magnetometer data (readings should go here)
 typedef struct Mag
 {
     float x, y, z, norm;
 } Mag;
 
+// Complimentary filter angles
 typedef struct Angle
 {
     int comp_x, comp_y, comp_z;

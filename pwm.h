@@ -4,7 +4,11 @@
 #include <stdint.h>
 #include "stm32f4xx_tim.h"
 
+// Function pointer that is used for the different motor functions
 typedef void (*MotorFunction)(TIM_TypeDef*, uint32_t);
+
+// Motor struct that holds information about pulse, base pulse, and
+// which function to use to run motor
 typedef struct
 {
     int                     pwm_value;
