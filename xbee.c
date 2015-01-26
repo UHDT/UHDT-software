@@ -1,6 +1,11 @@
 #include "xbee.h"
 
-
+/*
+ * Initializes the usart1 communication line on the STM32F4.
+ * It enables the GPIO pins as well as the USART peripheral.
+ *
+ * @param the baudrate for communication over USART
+ */
 void init_USART1(uint32_t baudrate)
 {
         GPIO_InitTypeDef GPIO_InitStruct; // this is for the GPIO pins used as TX and RX
@@ -22,11 +27,11 @@ void init_USART1(uint32_t baudrate)
          * so they work correctly with the USART1 peripheral
          */
         GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7; // Pins 6 (TX) and 7 (RX) are used
-        GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;                         // the pins are configured as alternate function so the USART peripheral has access to them
-        GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;                // this defines the IO speed and has nothing to do with the baudrate!
-        GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;                        // this defines the output type as push pull mode (as opposed to open drain)
-        GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;                        // this activates the pullup resistors on the IO pins
-        GPIO_Init(GPIOB, &GPIO_InitStruct);                                        // now all the values are passed to the GPIO_Init() function which sets the GPIO registers
+        GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;           // the pins are configured as alternate function so the USART peripheral has access to them
+        GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;      // this defines the IO speed and has nothing to do with the baudrate!
+        GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;         // this defines the output type as push pull mode (as opposed to open drain)
+        GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;           // this activates the pullup resistors on the IO pins
+        GPIO_Init(GPIOB, &GPIO_InitStruct);                 // now all the values are passed to the GPIO_Init() function which sets the GPIO registers
 
         /* The RX and TX pins are now connected to their AF
          * so that the USART1 can take over control of the
@@ -38,13 +43,13 @@ void init_USART1(uint32_t baudrate)
         /* Now the USART_InitStruct is used to define the
          * properties of USART1
          */
-        USART_InitStruct.USART_BaudRate = baudrate;                                // the baudrate is set to the value we passed into this init function
+        USART_InitStruct.USART_BaudRate = baudrate;             // the baudrate is set to the value we passed into this init function
         USART_InitStruct.USART_WordLength = USART_WordLength_8b;// we want the data frame size to be 8 bits (standard)
-        USART_InitStruct.USART_StopBits = USART_StopBits_1;                // we want 1 stop bit (standard)
-        USART_InitStruct.USART_Parity = USART_Parity_No;                // we don't want a parity bit (standard)
+        USART_InitStruct.USART_StopBits = USART_StopBits_1;     // we want 1 stop bit (standard)
+        USART_InitStruct.USART_Parity = USART_Parity_No;        // we don't want a parity bit (standard)
         USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None; // we don't want flow control (standard)
         USART_InitStruct.USART_Mode = USART_Mode_Tx | USART_Mode_Rx; // we want to enable the transmitter and the receiver
-        USART_Init(USART1, &USART_InitStruct);                                        // again all the properties are passed to the USART_Init function which takes care of all the bit setting
+        USART_Init(USART1, &USART_InitStruct);    // again all the properties are passed to the USART_Init function which takes care of all the bit setting
 
 
         /* Here the USART1 receive interrupt is enabled
@@ -54,11 +59,11 @@ void init_USART1(uint32_t baudrate)
          */
         USART_ITConfig(USART1, USART_IT_RXNE, ENABLE); // enable the USART1 receive interrupt
 
-        NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;                 // we want to configure the USART1 interrupts
+        NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;        // we want to configure the USART1 interrupts
         NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;// this sets the priority group of the USART1 interrupts
-        NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;                 // this sets the subpriority inside the group
-        NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;                         // the USART1 interrupts are globally enabled
-        NVIC_Init(&NVIC_InitStructure);                                                         // the properties are passed to the NVIC_Init function which takes care of the low level stuff
+        NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;       // this sets the subpriority inside the group
+        NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;          // the USART1 interrupts are globally enabled
+        NVIC_Init(&NVIC_InitStructure);                          // the properties are passed to the NVIC_Init function which takes care of the low level stuff
 
         // finally this enables the complete USART1 peripheral
         USART_Cmd(USART1, ENABLE);
@@ -180,7 +185,7 @@ void tx_request(uint8_t *datum, uint8_t datum_length)
 
 
 /*
-	Echoes an Rx packet.  Purely for debugging purposes.
+	Echoes a Rx packet. Purely for debugging purposes.
 */
 void echo()
 {
@@ -190,6 +195,13 @@ void echo()
         tx_request(Rx_Buffer, pk_size);
 }
 
+/*
+ * 	Reconstructs the received packet and places it in the Rx buffer.
+ * 	**The buffer only stores one packet at a time.**
+ *
+ * 	Any type of data extraction on Rx packets *could* be handled
+ * 	in the else section of this function.
+ */
 void rx_request()
 {
 
@@ -234,17 +246,8 @@ void rx_request()
 }
 
 /*
-	**Known flaw:  Receiving multiple escape characters
-	will will trigger xor if-statement multiple times resulting
-	in incorrectly read data.
-
-	Interrupt that handles xbee API packets received through
+	Interrupt that handles XBee API packets received through
 	USART1.
-	Reconstructs the packet and places it in the Rx buffer.
-	**The buffer only stores one packet at a time.**
-
-	Any type of data extraction on Rx packets *could* be handled
-	in the else section of this function.
 */
 void USART1_IRQHandler(void)
 {
