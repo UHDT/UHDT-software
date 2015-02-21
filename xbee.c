@@ -238,7 +238,7 @@ void rx_request()
 	//at this point, may need to flag that there is a new packet in the buffer
 	else
     { // otherwise reset values
-		//echo();
+		echo();
 		protocol_rx_data();
 		cnt = 0;
 		exp_size = 200;

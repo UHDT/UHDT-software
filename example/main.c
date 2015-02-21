@@ -10,11 +10,10 @@
 
 */
 
-#include "xbee.h"
-#include "protocol.h"
-
 #define MAIN
 #include "globals.h"
+#include "xbee.h"
+#include "protocol.h"
 
 void Delay(__IO uint32_t nCount);
 
@@ -45,10 +44,6 @@ int main(void)
 		Delay(0xFFFFFF);
 	}
 }
-
-
-
-
 
 void Delay(__IO uint32_t nCount)
 {

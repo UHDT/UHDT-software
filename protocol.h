@@ -41,4 +41,8 @@ typedef struct
 
 volatile uint8_t g_packet[110];
 
+void protocol_init_data();
+void protocol_tx_data();
+void protocol_rx_data();
+void protocol_debug();
 #endif
