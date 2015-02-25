@@ -10,6 +10,9 @@
 #include "stm32f4xx_gpio.h"
 #include "states.h"
 
+// CHANGES
+// CHANGES
+
 // Initializes the interrupts. This means that we set up
 // the proper timer for the interrupts and enable it.
 // @param: none
