@@ -1,3 +1,5 @@
+#include "stm32f4xx_gpio.h"
+
 #ifndef MACROS_H_INCLUDED
 #define MACROS_H_INCLUDED
 
@@ -22,6 +24,17 @@
 #define PWM2_PIN_SOURCE             GPIO_PinSource7
 #define PWM3_PIN_SOURCE             GPIO_PinSource8
 #define PWM4_PIN_SOURCE             GPIO_PinSource9
+
+// Motor enables
+#define GPIO_EN                    GPIOA
+#define EN1_PIN                    GPIO_Pin_1
+#define EN2_PIN                    GPIO_Pin_2
+#define EN3_PIN                    GPIO_Pin_3
+#define EN1_PIN_SOURCE             GPIO_PinSource1
+#define EN2_PIN_SOURCE             GPIO_PinSource2
+#define EN3_PIN_SOURCE             GPIO_PinSource3
+
+
 
 // Motor functions and inital PULSE value for each corresponding
 // motor
@@ -55,8 +68,8 @@
 
 // IMU macros
 #define IMU_GYRO_ADDR               0b1101011
-#define IMU_ACCEL_ADDR              0b0011001
-#define IMU_MAG_ADDR                0b0011110
+#define IMU_ACCEL_ADDR              0b0011101
+#define IMU_MAG_ADDR                0b0011101
 #define GAIN                        100
 #define COMP_GAIN                   .95
 

@@ -19,7 +19,7 @@ void TimingDelay_Decrement(void) {
 }
 #else
 void SysTick_Handler(void) {
-	util_time++;
+ 	util_time++;
 	if (util_time2 != 0x00) {
 		util_time2--;
 	}

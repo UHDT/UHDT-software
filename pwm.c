@@ -176,6 +176,7 @@ void pwm_inc_to_value(Motor *motor, int pwm_value)
         motor->pwm_value += increment;
         motor->MOTOR_FUNC(TIM4, motor->pwm_value);
     }
+ //   printf("pwm value %d\n", (int)pwm_value);
 }
 
 // Increment the pwm value of the corresponding motor by

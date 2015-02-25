@@ -227,6 +227,7 @@ void imu_fill_angle_data(Angle *ang, Gyro *gyro, Mag *mag, Accel *acc)
 {
     float xh, yh;
     float dt = .085;
+//    float dt = .2;
 
     //Complementary Filter
     ang->comp_x = (COMP_GAIN*(float)(ang->comp_x + gyro->x*dt) + ((1-COMP_GAIN)*(float)acc->x_ang));
