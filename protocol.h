@@ -27,16 +27,16 @@
 
 typedef struct
 {
-	uint8_t latitude;
-	uint8_t longitude;
-	uint8_t altitude;
-	uint8_t velocity;
-	uint8_t orientation;
-	uint8_t power;
-	uint8_t signal_strength;
+    uint8_t latitude;
+    uint8_t longitude;
+    uint8_t altitude;
+    uint8_t velocity;
+    uint8_t orientation;
+    uint8_t power;
+    uint8_t signal_strength;
 
-	uint8_t dest_lat;
-	uint8_t dest_lon;
+    uint8_t dest_lat;
+    uint8_t dest_lon;
 } DroneData;
 
 volatile uint8_t g_packet[110];
