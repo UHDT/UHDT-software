@@ -7,6 +7,9 @@
 #include "stm32f4xx_rcc.h"
 #include "misc.h"
 
+#include "globals.h"
+#include "xbee.h"
+
 #define REQUEST 0xAA
 #define TRANSMIT 0xFF
 
@@ -23,7 +26,10 @@
 #define TRUE 1
 #define FALSE 0
 
-#define PACKET_DATA_SIZE 9
+#define DATA_PACKET_SIZE 240
+#define SOURCE_ID 0xDEAF
+#define DEST_ID 0x3D2F
+#define PACKET_END 0xED
 
 typedef struct
 {
@@ -44,5 +50,7 @@ volatile uint8_t g_packet[110];
 void protocol_init_data();
 void protocol_tx_data();
 void protocol_rx_data();
+void protocol_packet_generator ();
+void protocol_data_packet_generator ();
 void protocol_debug();
 #endif

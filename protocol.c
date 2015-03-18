@@ -1,6 +1,4 @@
 #include "protocol.h"
-#include "globals.h"
-#include "xbee.h"
 
 void protocol_init_data ()
 {
@@ -14,7 +12,6 @@ void protocol_init_data ()
     g_data.dest_lat = 0;
     g_data.dest_lon = 0;
 }
-
 
 void protocol_tx_data ()
 {
@@ -36,6 +33,24 @@ void protocol_rx_data ()
     g_data.signal_strength = Rx_Buffer[index++];
     g_data.dest_lat = Rx_Buffer[index++];
     g_data.dest_lon = Rx_Buffer[index++];
+}
+
+void protocol_packet_generator ()
+{
+    uint8_t packet[PACKET_DATA_SIZE] = {0};
+
+    packet[0] = (SOURCE_ID >> 8) & 0xFF;
+    packet[1] = SOURCE_ID & 0xFF;
+    packet[2] = (DEST_ID >> 8) & 0xFF;
+    packet[3] = DEST_ID & 0xFF;
+    packet[4] = PACKET_DATA_SIZE;
+    packet[PACKET_DATA_SIZE-1] = PACKET_END;
+
+    tx_request(packet,PACKET_DATA_SIZE);
+}
+
+void protocol_data_packet_generator ()
+{
 }
 
 void protocol_debug ()
