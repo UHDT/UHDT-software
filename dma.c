@@ -1,3 +1,0 @@
-void dma_init()
-{
-}
