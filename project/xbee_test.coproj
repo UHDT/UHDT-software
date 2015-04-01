@@ -90,10 +90,10 @@
   <Files>
     <File name="cmsis_lib/source/stm32f4xx_gpio.c" path="cmsis_lib/source/stm32f4xx_gpio.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_i2c.h" path="cmsis_lib/include/stm32f4xx_i2c.h" type="1"/>
-    <File name="cmsis_lib/source/stm32f4xx_usart.c" path="cmsis_lib/source/stm32f4xx_usart.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_dma.c" path="cmsis_lib/source/stm32f4xx_dma.c" type="1"/>
-    <File name="cmsis_lib/include/stm32f4xx_dac.h" path="cmsis_lib/include/stm32f4xx_dac.h" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_usart.c" path="cmsis_lib/source/stm32f4xx_usart.c" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
+    <File name="cmsis_lib/include/stm32f4xx_dac.h" path="cmsis_lib/include/stm32f4xx_dac.h" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_usart.h" path="cmsis_lib/include/stm32f4xx_usart.h" type="1"/>
     <File name="protocol.h" path="../protocol.h" type="1"/>
     <File name="semihosting/sh_cmd.s" path="semihosting/sh_cmd.s" type="1"/>
@@ -106,8 +106,8 @@
     <File name="semihosting/semihosting.c" path="semihosting/semihosting.c" type="1"/>
     <File name="xbee.h" path="../xbee.h" type="1"/>
     <File name="cmsis_lib/source/misc.c" path="cmsis_lib/source/misc.c" type="1"/>
-    <File name="cmsis_lib/source/stm32f4xx_adc.c" path="cmsis_lib/source/stm32f4xx_adc.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_tim.h" path="cmsis_lib/include/stm32f4xx_tim.h" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_adc.c" path="cmsis_lib/source/stm32f4xx_adc.c" type="1"/>
     <File name="syscalls/syscalls.c" path="syscalls/syscalls.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_i2c.c" path="cmsis_lib/source/stm32f4xx_i2c.c" type="1"/>
     <File name="cmsis_lib/source" path="" type="2"/>

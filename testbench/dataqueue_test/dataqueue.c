@@ -1,4 +1,4 @@
-//#define TESTBENCH
+#define TESTBENCH
 
 #include "dataqueue.h"
 

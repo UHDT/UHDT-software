@@ -1,5 +1,3 @@
-//#define TESTBENCH
-
 #include "xbee.h"
 
 /*
