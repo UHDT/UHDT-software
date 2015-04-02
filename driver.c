@@ -11,6 +11,7 @@
 void test_add (DataQueue*,uint8_t,uint8_t,uint8_t*,int*,int);
 void test_remove (DataQueue*,int*,int);
 void test_peek (DataQueue*,int*,int);
+void test_packetgen (DataQueue*,int*,int);
 void display_queue (DataQueue*);
 
 int verbose = FALSE;
@@ -26,6 +27,7 @@ int main (int argc, char * argv[])
 
     int testnum = 0;
     DataQueue queue[DATA_QUEUE_MAX];
+
     test_remove(queue,&testnum,0);
 
     uint8_t packet[80] = {0};
@@ -34,11 +36,13 @@ int main (int argc, char * argv[])
     uint8_t packet1[4] = {1,2,3,4};
     test_add(queue,0xFA,4,packet1,&testnum,2);
 
-    test_peek(queue,&testnum,2);
+    test_packetgen(queue,&testnum,92);
 
-    test_remove(queue,&testnum,1);
+    test_peek(queue,&testnum,0);
 
-    test_peek(queue,&testnum,1);
+    test_remove(queue,&testnum,0);
+
+    test_peek(queue,&testnum,0);
 
     if (verbose)
     {
@@ -133,6 +137,27 @@ void test_peek (DataQueue * queue, int * testnum, int expected)
     }
 
     printf("Test %d Result: %s\n",(*testnum)++,(g_dataqueue_size==expected ? "PASS" : "FAIL"));
+}
+
+void test_packetgen (DataQueue * queue, int * testnum, int expected)
+{
+    printf("\nTest %d: PACKETGEN\n",(*testnum));
+    uint8_t packet[DATA_PACKET_SIZE];
+    protocol_packet_generator(packet,queue);
+    if (verbose)
+    {
+        int count = 0;
+        printf("\nSOURCE ID: 0x%X%X\n",packet[0],packet[1]);
+        printf("DEST ID: 0x%X%X\n",packet[2],packet[3]);
+        printf("SIZE: %d\n",packet[4]);
+        printf("PACKET:\n");
+        for (count = 5; count < packet[4]-1; count++)
+        {
+            printf("\t%d\n",packet[count]);
+        }
+        printf("END: 0x%X\n",packet[packet[4]-1]);
+    }
+    printf("Test %d Result: %s\n",(*testnum)++,(packet[4]==expected ? "PASS" : "FAIL"));
 }
 
 void display_queue (DataQueue * queue)

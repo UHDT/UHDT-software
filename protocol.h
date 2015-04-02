@@ -40,6 +40,6 @@ typedef struct
     uint8_t dest_lon;
 } DroneData;
 
-void protocol_packet_generator (DataQueue*);
+uint8_t * protocol_packet_generator (uint8_t*,DataQueue*);
 int protocol_data_packet_generator (uint8_t[],int*,DataQueue*);
 #endif

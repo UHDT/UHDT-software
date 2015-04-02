@@ -52,12 +52,10 @@ void protocol_debug ()
 }
 */
 
-#ifndef TESTBENCH
-void protocol_packet_generator (DataQueue * queue)
+uint8_t * protocol_packet_generator (uint8_t packet [], DataQueue * queue)
 {
     int index = 5;
     int size = 0;
-    uint8_t packet[DATA_PACKET_SIZE] = {0};
 
     packet[0] = (SOURCE_ID >> 8) & 0xFF;
     packet[1] = SOURCE_ID & 0xFF;
@@ -67,18 +65,22 @@ void protocol_packet_generator (DataQueue * queue)
     packet[4] = size;
     packet[size-1] = PACKET_END;
 
+#ifndef TESTBENCH
     tx_request(packet,size);
-}
 #endif
+
+    return packet;
+}
 
 int protocol_data_packet_generator (uint8_t packet[],int * index, DataQueue * queue)
 {
-    int size = (*index)+1;
+    int size = (*index);
     int count = 0;
     DataQueue * temp;
 
-    while ((temp = dataqueue_peek(queue)) != NULL && (size+=(temp->size+1) <= DATA_PACKET_SIZE))
+    while ((temp = dataqueue_peek(queue)) != NULL && ((size+temp->size+1) <= DATA_PACKET_SIZE))
     {
+        size = size + temp->size + 1;
         temp = dataqueue_remove(queue);
         packet[(*index)++] = temp->datatype;
         for (count = 0; count < temp->size; count++)
@@ -87,5 +89,5 @@ int protocol_data_packet_generator (uint8_t packet[],int * index, DataQueue * qu
         }
     }
 
-    return size;
+    return size+1;
 }
