@@ -24,5 +24,6 @@ typedef struct
 int dataqueue_add (DataQueue*,uint8_t,uint8_t,uint8_t*);
 DataQueue * dataqueue_remove (DataQueue[]);
 DataQueue * dataqueue_peek (DataQueue[]);
+void dataqueue_init ();
 
 #endif

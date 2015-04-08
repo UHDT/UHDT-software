@@ -24,27 +24,31 @@ uint8_t escaped = FALSE;
 int main(void)
 {
     init_USART1(9600);
-    //uint8_t stuffs[DATA_PACKET_SIZE] = {0};
-    uint8_t stuffs[10] = {0};
-    DataQueue queue[DATA_QUEUE_MAX] = {0};
+    uint8_t stuffs[DATA_PACKET_SIZE] = {0};
+    //uint8_t stuffs[10] = {0};
+    DataQueue queue[DATA_QUEUE_MAX];
     int count = 0;
     dataqueue_init();
 
-
+/*
     for (count = 0; count < sizeof(stuffs); count++)
     {
         stuffs[count] = count;
     }
 
     protocol_init_data();
+*/
 
-
+	uint8_t packet [10] = {1,2,3,4,5,6,7,8,9,0};
+	uint8_t packet2 [3] = {0xFF,0xFE,0xEF};
     while(1)
     {
-        tx_request(stuffs, sizeof(stuffs));
+        //tx_request(stuffs, sizeof(stuffs));
     	//send_byte(0xCC,0);
         //protocol_tx_data();
-        //protocol_packet_generator(stuffs,queue);
+    	dataqueue_add(queue,LATITUDE,sizeof(packet),packet);
+    	dataqueue_add(queue,LONGITUDE,sizeof(packet2),packet2);
+        protocol_packet_generator(stuffs,queue);
         Delay(0xFFFFFF);
     }
 }

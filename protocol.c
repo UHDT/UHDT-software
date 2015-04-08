@@ -76,16 +76,27 @@ int protocol_data_packet_generator (uint8_t packet[],int * index, DataQueue * qu
 {
     int size = (*index);
     int count = 0;
-    DataQueue * temp;
+    int debug = 0;
+    DataQueue * temp = dataqueue_peek(queue);
 
-    while ((temp = dataqueue_peek(queue)) != NULL && ((size+temp->size+1) <= DATA_PACKET_SIZE))
+    if (temp != NULL)
     {
-        size = size + temp->size + 1;
-        temp = dataqueue_remove(queue);
-        packet[(*index)++] = temp->datatype;
-        for (count = 0; count < temp->size; count++)
+        while (g_dataqueue_size > 0 && ((temp->size+1) <= PACKET_SIZE))
         {
-            packet[(*index)++] = temp->data[count];
+            temp = dataqueue_remove(queue);
+            size = size + temp->size + 1;
+            packet[(*index)++] = temp->datatype;
+            for (count = 0; count < temp->size; count++)
+            {
+                packet[(*index)++] = temp->data[count];
+            }
+
+            temp = dataqueue_peek(queue);
+            if (temp == NULL)
+            {
+                //break;
+            }
+
         }
     }
 
