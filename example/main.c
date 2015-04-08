@@ -11,9 +11,11 @@
  */
 
 #define MAIN
+#include "macros.h"
 #include "globals.h"
 #include "xbee.h"
 #include "protocol.h"
+#include "dataqueue.h"
 
 void Delay(__IO uint32_t nCount);
 
@@ -22,8 +24,12 @@ uint8_t escaped = FALSE;
 int main(void)
 {
     init_USART1(9600);
-    uint8_t stuffs[241] = {0};
+    //uint8_t stuffs[DATA_PACKET_SIZE] = {0};
+    uint8_t stuffs[10] = {0};
+    DataQueue queue[DATA_QUEUE_MAX] = {0};
     int count = 0;
+    dataqueue_init();
+
 
     for (count = 0; count < sizeof(stuffs); count++)
     {
@@ -32,11 +38,13 @@ int main(void)
 
     protocol_init_data();
 
+
     while(1)
     {
-        //tx_request(stuffs, sizeof(stuffs));
+        tx_request(stuffs, sizeof(stuffs));
+    	//send_byte(0xCC,0);
         //protocol_tx_data();
-        protocol_packet_generator();
+        //protocol_packet_generator(stuffs,queue);
         Delay(0xFFFFFF);
     }
 }

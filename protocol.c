@@ -1,8 +1,8 @@
-#define TESTBENCH
+//#define TESTBENCH
 
 #include "protocol.h"
 
-/*
+#ifndef TESTBENCH
 void protocol_init_data ()
 {
     g_data.latitude = 0;
@@ -18,7 +18,7 @@ void protocol_init_data ()
 
 void protocol_tx_data ()
 {
-    uint8_t packet[DATA_PACKET_SIZE];
+    uint8_t packet[DATA_PACKET_SIZE] = {0};
 
     memcpy(packet,&g_data,DATA_PACKET_SIZE);
     tx_request(packet,DATA_PACKET_SIZE);
@@ -50,7 +50,7 @@ void protocol_debug ()
     printf("%d ",g_data.dest_lat);
     printf("%d ",g_data.dest_lon);
 }
-*/
+#endif
 
 uint8_t * protocol_packet_generator (uint8_t packet [], DataQueue * queue)
 {

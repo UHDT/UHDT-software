@@ -3,7 +3,7 @@
 
 #define TRUE 1
 #define FALSE 0
-
+/*
 // Old protocol macros
 #define REQUEST 0xAA
 #define TRANSMIT 0xFF
@@ -17,7 +17,7 @@
 #define SIGNAL_STRENGTH 0xFA
 
 #define DESTINATION 0xAF
-
+*/
 // New protocol macros
 #define DATA_PACKET_SIZE 240
 #define SOURCE_ID 0xDEAF
