@@ -92,13 +92,30 @@ int protocol_data_packet_generator (uint8_t packet[],int * index, DataQueue * qu
             }
 
             temp = dataqueue_peek(queue);
-            if (temp == NULL)
-            {
-                //break;
-            }
-
         }
     }
 
     return size+1;
+}
+
+int protocol_packet_parser()
+{
+    int index = 15;
+    int size = 0;
+    int count = 0;
+
+    if((Rx_Buffer[index+0]<<8|Rx_Buffer[index+1]) != DEST_ID)
+        return FALSE;
+    if((Rx_Buffer[index+2]<<8|Rx_Buffer[index+3]) != SOURCE_ID)
+        return FALSE;
+
+    size = Rx_Buffer[index+4];
+    index = index + 5;
+
+    for (count = 0; count < size-1; count++)
+    {
+    }
+
+    if(Rx_Buffer[index+(size-1)] != PACKET_END)
+        return FALSE;
 }
