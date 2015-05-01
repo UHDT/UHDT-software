@@ -4,11 +4,10 @@
 #include <stm32f4xx_tim.h>
 #include <stm32f4xx_rcc.h>
 #include <misc.h>
-#include <stdint.h>
-
 #include "protocol.h"
 #include "xbee.h"
 #include "macros.h"
+#include <stdint.h>
 
 #ifdef MAIN
 // g_transmit_time is the amount of time in milli-seconds (ms)

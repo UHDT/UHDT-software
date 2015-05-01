@@ -1,3 +1,6 @@
+#define TESTBENCH
+
+#ifndef TESTBENCH
 #include "interrupts.h"
 
 // Initializes the interrupts. This means that we set up
@@ -76,3 +79,4 @@ void TIM2_IRQHandler()
         }
     }
 }
+#endif

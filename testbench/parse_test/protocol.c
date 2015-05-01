@@ -108,7 +108,7 @@ int protocol_data_packet_generator (uint8_t packet[],int * index, DataQueue * qu
 
 int protocol_packet_parser()
 {
-    int index = 14; // Start of communication protocol packet
+    int index = 15;
     int size = 0;
     int count = 0;
     int datasize = 0;
