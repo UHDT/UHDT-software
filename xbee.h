@@ -9,6 +9,10 @@
 #include "misc.h"
 #endif
 
+#include "macros.h"
+#include "dataqueue.h"
+#include "interrupts.h"
+
 #define _START_BYTE 0x7e
 #define _ESCAPE 0x7d
 #define _XON 0x11

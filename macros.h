@@ -8,12 +8,13 @@
 #define REQUEST 0xAA
 #define TRANSMIT 0xFF
 
-#define LATITUDE 0xA1
-#define LONGITUDE 0xA2
+// Data types
+#define NUM_DATA_TYPES 0xFF
+#define WAYPOINT 0x00
+#define GPS 0x01
 #define ALTITUDE 0xBA
 #define VELOCITY 0xCA
 #define ORIENTATION 0xDA
-//#define POWER 0xEA
 #define SIGNAL_STRENGTH 0xFA
 
 #define DESTINATION 0xAF

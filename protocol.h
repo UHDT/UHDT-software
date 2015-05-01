@@ -16,6 +16,7 @@
 #include "macros.h"
 #include "xbee.h"
 #include "dataqueue.h"
+#include "parsers.h"
 
 // Old Protocol prototypes and global
 volatile uint8_t g_packet[110];
@@ -43,11 +44,15 @@ typedef struct
 #ifdef MAIN
 // variables for main
 DroneData g_data;
+int g_count;
 #else
 // extern variables
 extern DroneData g_data;
+extern int g_count;
 #endif
 
 uint8_t * protocol_packet_generator (uint8_t*,DataQueue*);
 int protocol_data_packet_generator (uint8_t[],int*,DataQueue*);
+int protocol_packet_parser();
+
 #endif

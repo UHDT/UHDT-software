@@ -158,6 +158,9 @@ uint8_t get_frame_id()
  */
 void tx_request(uint8_t *datum, uint8_t datum_length)
 {
+	int temp = g_dataqueue_front;
+	int temp2 = g_dataqueue_size;
+	int temp3 = g_transmit_time;
     uint8_t i;
     uint8_t request[datum_length + 14];
 
@@ -180,7 +183,6 @@ void tx_request(uint8_t *datum, uint8_t datum_length)
         request[i] = datum[i - 14];
 
     xbee_send(request, sizeof(request));
-
 }
 
 
@@ -239,7 +241,7 @@ void rx_request()
     else
     { // otherwise reset values
         echo();
-        protocol_rx_data();
+        protocol_packet_parser();
         cnt = 0;
         exp_size = 200;
     }

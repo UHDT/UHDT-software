@@ -24,7 +24,7 @@
  *
  *******************************************************************/
 int dataqueue_add (DataQueue * queue, uint8_t datatype, uint8_t packetsize,uint8_t * packet)
-{   
+{
     if (g_dataqueue_size >= DATA_QUEUE_MAX)
     {
         return FALSE;
@@ -34,7 +34,7 @@ int dataqueue_add (DataQueue * queue, uint8_t datatype, uint8_t packetsize,uint8
         return FALSE;
     }
 
-    int index = ((g_dataqueue_front + g_dataqueue_size) % DATA_QUEUE_MAX);
+    int index = ((g_dataqueue_front+g_dataqueue_size)%DATA_QUEUE_MAX);
 
     queue[index].datatype = datatype;
     queue[index].size = packetsize;
@@ -84,7 +84,7 @@ DataQueue * dataqueue_remove (DataQueue * queue)
  *  Return Values: The struct at the front of the queue.
  *
  *******************************************************************/
-DataQueue * dataqueue_peek (DataQueue * queue)
+DataQueue * dataqueue_peek (const DataQueue * queue)
 {
     if (g_dataqueue_size <= 0)
     {
@@ -98,4 +98,5 @@ void dataqueue_init ()
 {
     g_dataqueue_size = 0;
     g_dataqueue_front = 0;
+    g_dataqueue_lock = FALSE;
 }
