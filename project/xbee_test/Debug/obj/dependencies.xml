@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dependencies>
-   <includePath signature="/I..\..\..\..\..\cygwin64\home /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project /I..\..\..\..\..\cygwin64\home\Sean /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_lib\include /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_boot /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_lib /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\semihosting">
+   <includePath signature="/I..\..\..\..\..\cygwin64\home /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project /I..\..\..\..\..\cygwin64\home\Sean /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_lib\include /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_boot /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_lib /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\semihosting">
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="14d04d0961f">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -39,7 +39,7 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\..\xbee.c" lastModified="14d0f8cacb7">
+      <source file="..\..\..\..\xbee.c" lastModified="14d144304bd">
          <include file="..\..\..\..\xbee.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h" lastModified="14d04d095f8">
@@ -84,9 +84,9 @@
          <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
          <sysinclude file="..\..\..\..\..\..\..\usr\include\stdint.h"/>
       </source>
-      <source file="..\..\..\..\macros.h" lastModified="14d0f88b612">
+      <source file="..\..\..\..\macros.h" lastModified="14d141ecdd9">
       </source>
-      <source file="..\..\..\..\example\main.c" lastModified="14d0f8a1ea5">
+      <source file="..\..\..\..\example\main.c" lastModified="14d14462006">
          <include file="..\..\..\..\macros.h"/>
          <include file="..\..\..\..\xbee.h"/>
          <include file="..\..\..\..\protocol.h"/>
@@ -132,7 +132,10 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h"/>
          <include file="..\..\..\cmsis_lib\include\misc.h"/>
       </source>
-      <source file="..\..\..\..\interrupts.h" lastModified="14d09cb994f">
+      <source file="..\..\..\..\interrupts.h" lastModified="14d0f96d387">
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\misc.h"/>
          <include file="..\..\..\..\protocol.h"/>
          <include file="..\..\..\..\xbee.h"/>
          <include file="..\..\..\..\macros.h"/>
@@ -143,10 +146,7 @@
       </source>
       <source file="..\..\..\cmsis\core_cmInstr.h" lastModified="14d04d099ab">
       </source>
-      <source file="..\..\..\..\interrupts.c" lastModified="14d07806691">
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+      <source file="..\..\..\..\interrupts.c" lastModified="14d0f96b1d0">
          <include file="..\..\..\..\interrupts.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h" lastModified="14d04d0960a">
@@ -158,7 +158,7 @@
       </source>
       <source file="..\..\..\semihosting\semihosting.h" lastModified="14d04d0964d">
       </source>
-      <source file="..\..\..\..\waypoints.h" lastModified="14d0f8b2dba">
+      <source file="..\..\..\..\waypoints.h" lastModified="14d1425f1ff">
          <include file="..\..\..\..\macros.h"/>
          <include file="..\..\..\..\parsers.h"/>
          <include file="..\..\..\..\xbee.h"/>
@@ -170,7 +170,7 @@
          <sysinclude file="..\..\..\..\..\..\..\usr\include\sys\types.h"/>
          <sysinclude file="..\..\..\..\..\..\..\usr\include\sys\stat.h"/>
       </source>
-      <source file="..\..\..\..\waypoints.c" lastModified="14d0f87d6cc">
+      <source file="..\..\..\..\waypoints.c" lastModified="14d1425f1ee">
          <include file="..\..\..\..\waypoints.h"/>
       </source>
       <source file="..\..\..\..\protocol.h" lastModified="14d0f8d94a0">
@@ -200,7 +200,7 @@
       </source>
       <source file="..\..\..\cmsis_boot\system_stm32f4xx.h" lastModified="14d04d095d9">
       </source>
-      <source file="..\..\..\..\protocol.c" lastModified="14d0f75ec48">
+      <source file="..\..\..\..\protocol.c" lastModified="14d14395354">
          <include file="..\..\..\..\protocol.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14d04d09644">
@@ -214,10 +214,10 @@
          <include file="..\..\..\..\macros.h"/>
          <sysinclude file="..\..\..\..\..\..\..\usr\include\stdint.h"/>
       </source>
-      <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="14d04d095c9">
-      </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h" lastModified="14d04d09605">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+      </source>
+      <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="14d04d095c9">
       </source>
       <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="14d04d095d5">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
@@ -226,7 +226,7 @@
          <include file="..\..\..\..\parsers.h"/>
       </source>
    </includePath>
-   <includePath signature="/I..\..\..\..\..\cygwin64\home /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project /I..\..\..\..\..\cygwin64\home\Sean /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_lib\include /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_boot /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_lib /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\semihosting">
+   <includePath signature="/I..\..\..\..\..\cygwin64\home /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project /I..\..\..\..\..\cygwin64\home\Sean /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_lib\include /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_boot /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\cmsis_lib /I..\..\..\..\..\cygwin64\home\Sean\UHDT-software\project\semihosting">
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="14d04d0961f">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -317,20 +317,8 @@
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_i2c.h" lastModified="14d04d095f0">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\..\interrupts.h" lastModified="14d09cb994f">
-         <include file="..\..\..\..\protocol.h"/>
-         <include file="..\..\..\..\xbee.h"/>
-         <include file="..\..\..\..\macros.h"/>
-         <sysinclude file="..\..\..\..\..\..\..\usr\include\stdint.h"/>
-      </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_spi.h" lastModified="14d04d09601">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\..\interrupts.c" lastModified="14d07806691">
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\misc.h"/>
-         <include file="..\..\..\..\interrupts.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h" lastModified="14d04d0960a">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
@@ -345,6 +333,20 @@
          <include file="..\..\..\semihosting\semihosting.h"/>
          <sysinclude file="..\..\..\..\..\..\..\usr\include\sys\types.h"/>
          <sysinclude file="..\..\..\..\..\..\..\usr\include\sys\stat.h"/>
+      </source>
+      <source file="..\..\..\..\protocol.h" lastModified="14d0f8d94a0">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+         <include file="..\..\..\..\macros.h"/>
+         <include file="..\..\..\..\xbee.h"/>
+         <include file="..\..\..\..\dataqueue.h"/>
+         <include file="..\..\..\..\parsers.h"/>
+         <sysinclude file="..\..\..\..\..\..\..\usr\include\stdint.h"/>
+         <sysinclude file="..\..\..\..\..\..\..\usr\include\string.h"/>
+         <sysinclude file="..\..\..\..\..\..\..\usr\include\stdio.h"/>
       </source>
       <source file="..\..\..\..\dataqueue.h" lastModified="14d073d3ec5">
          <include file="..\..\..\..\macros.h"/>
@@ -366,13 +368,20 @@
       <source file="..\..\..\..\dataqueue.c" lastModified="14d07c53c1b">
          <include file="..\..\..\..\dataqueue.h"/>
       </source>
-      <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="14d04d095c9">
+      <source file="..\..\..\..\parsers.h" lastModified="14d0f8b7092">
+         <include file="..\..\..\..\macros.h"/>
+         <sysinclude file="..\..\..\..\..\..\..\usr\include\stdint.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h" lastModified="14d04d09605">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
+      <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="14d04d095c9">
+      </source>
       <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="14d04d095d5">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+      </source>
+      <source file="..\..\..\..\parsers.c" lastModified="14d0f89edd5">
+         <include file="..\..\..\..\parsers.h"/>
       </source>
    </includePath>
 </dependencies>

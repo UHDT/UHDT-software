@@ -7,7 +7,7 @@
       <target file="stm32f4xx_rtc.o" lastModified="14d0f8f70b4">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_rtc.c" lastModified="14d04d0963a"/>
       </target>
-      <target file="dataqueue.o" lastModified="14d0f8f6581">
+      <target file="dataqueue.o" lastModified="14d141ed4d5">
          <source file="..\..\..\..\dataqueue.c" lastModified="14d07c53c1b"/>
       </target>
       <target file="startup_stm32f4xx.o" lastModified="14d0f8f661f">
@@ -28,20 +28,20 @@
       <target file="misc.o" lastModified="14d0f8f6f31">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14d04d0960e"/>
       </target>
-      <target file="waypoints.o" lastModified="14d0f8f66d1">
-         <source file="..\..\..\..\waypoints.c" lastModified="14d0f87d6cc"/>
+      <target file="waypoints.o" lastModified="14d1425f6c1">
+         <source file="..\..\..\..\waypoints.c" lastModified="14d1425f1ee"/>
+      </target>
+      <target file="protocol.o" lastModified="14d14397d4d">
+         <source file="..\..\..\..\protocol.c" lastModified="14d14395354"/>
       </target>
       <target file="stm32f4xx_dma.o" lastModified="14d0f8f6caa">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_dma.c" lastModified="14d04d09619"/>
       </target>
-      <target file="protocol.o" lastModified="14d0f8f606e">
-         <source file="..\..\..\..\protocol.c" lastModified="14d0f75ec48"/>
+      <target file="interrupts.o" lastModified="14d141ed42c">
+         <source file="..\..\..\..\interrupts.c" lastModified="14d0f96b1d0"/>
       </target>
-      <target file="xbee.o" lastModified="14d0f8f7364">
-         <source file="..\..\..\..\xbee.c" lastModified="14d0f8cacb7"/>
-      </target>
-      <target file="interrupts.o" lastModified="14d0f8f6161">
-         <source file="..\..\..\..\interrupts.c" lastModified="14d07806691"/>
+      <target file="xbee.o" lastModified="14d14432590">
+         <source file="..\..\..\..\xbee.c" lastModified="14d144304bd"/>
       </target>
       <target file="stm32f4xx_rng.o" lastModified="14d0f8f6eb8">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_rng.c" lastModified="14d04d09631"/>
@@ -64,7 +64,7 @@
       <target file="sh_cmd.o" lastModified="14d0f8f6b00">
          <source file="..\..\..\semihosting\sh_cmd.s" lastModified="14d04d0964e"/>
       </target>
-      <target file="parsers.o" lastModified="14d0f8f6f82">
+      <target file="parsers.o" lastModified="14d141ed7bf">
          <source file="..\..\..\..\parsers.c" lastModified="14d0f89edd5"/>
       </target>
       <target file="stm32f4xx_i2c.o" lastModified="14d0f8f6e38">
@@ -73,8 +73,8 @@
       <target file="semihosting.o" lastModified="14d0f8f5f86">
          <source file="..\..\..\semihosting\semihosting.c" lastModified="14d04d0964a"/>
       </target>
-      <target file="main.o" lastModified="14d0f8f67c3">
-         <source file="..\..\..\..\example\main.c" lastModified="14d0f8a1ea5"/>
+      <target file="main.o" lastModified="14d14462481">
+         <source file="..\..\..\..\example\main.c" lastModified="14d14462006"/>
       </target>
       <target file="stm32f4xx_usart.o" lastModified="14d0f8f62c6">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_usart.c" lastModified="14d04d09647"/>

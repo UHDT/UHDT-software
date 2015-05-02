@@ -209,7 +209,7 @@ void rx_request()
 
     static uint16_t cnt = 0; // index of received packet
     static uint16_t exp_size = 200;  // expected packet size filled with temp value until MSB and LSB are read
-    char t = USART1->DR; // the character from the USART1 data register is saved in t
+    uint8_t t = (uint8_t) USART_ReceiveData(USART1); // the character from the USART1 data register is saved in t
 
     // keep storing bytes until the checksum is stored
     if( cnt != exp_size - 1)

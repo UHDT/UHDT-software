@@ -12,9 +12,9 @@ void init_waypoints();
 void parse_waypoints(uint8_t,uint8_t);
 
 #ifdef MAIN
-int waypoints[3];
+int g_waypoints[3] = {0};
 #else
-extern int waypoints[3];
+extern int g_waypoints[3];
 #endif
 
 #endif

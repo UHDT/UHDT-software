@@ -72,7 +72,7 @@ uint8_t * protocol_packet_generator (uint8_t packet [], DataQueue * queue)
         packet[size-1] = PACKET_END;
 
 #ifndef TESTBENCH
-        //tx_request(packet,size);
+        	tx_request(packet,size);
 #endif
     }
     g_count++;
@@ -108,7 +108,7 @@ int protocol_data_packet_generator (uint8_t packet[],int * index, DataQueue * qu
 
 int protocol_packet_parser()
 {
-    int index = 14; // Start of communication protocol packet
+    int index = 15; // Start of communication protocol packet
     int size = 0;
     int count = 0;
     int datasize = 0;
@@ -128,11 +128,12 @@ int protocol_packet_parser()
 
     // index+4 contains the overall size of the packet transmitted
     size = Rx_Buffer[index+4];
+    index = index + 5;
 
     // Parses the data in the packet
-    for (index = index+5; index < size-1; index++)
+    for (count = 0; count < size-1; count++)
     {
-        datasize = parse_data(Rx_Buffer[index],index+1);
+        datasize = parse_data(Rx_Buffer[index],++index);
 
         // Either there was an error in the packet or a false
         // datatype was given. Either way this packet should
@@ -141,6 +142,7 @@ int protocol_packet_parser()
             return FALSE;
 
         index += datasize;
+        count += datasize;
     }
 
     if(Rx_Buffer[index+(size-1)] != PACKET_END)

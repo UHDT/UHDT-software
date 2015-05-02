@@ -27,24 +27,16 @@ int main(void)
 {
     init_USART1(115200);
     int_init();
-    uint8_t stuffs[DATA_PACKET_SIZE] = {0};
-    //uint8_t stuffs[10] = {0};
-    int count = 0;
-    g_count = 0;
+    init_waypoints();
     dataqueue_init();
 
-    /*
-       for (count = 0; count < sizeof(stuffs); count++)
-       {
-       stuffs[count] = count;
-       }
-
-       protocol_init_data();
-     */
+    uint8_t stuffs[DATA_PACKET_SIZE] = {0};
+    int count = 0;
+    g_count = 0;
 
     uint8_t packet [10] = {1,2,3,4,5,6,7,8,9,0};
     uint8_t packet2 [3] = {0xFF,0xFE,0xEF};
-    g_transmit_time = 500;
+    g_transmit_time = 1000;
     while(1)
     {
         //tx_request(stuffs, sizeof(stuffs));
@@ -54,7 +46,8 @@ int main(void)
         //protocol_packet_generator(stuffs,g_queue);
 
         //tx_request(packet,sizeof(packet));
-        Delay(10000);
+        printf(g_waypoints[0]);
+        Delay(100000);
     }
 }
 

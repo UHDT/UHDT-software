@@ -13,6 +13,6 @@ void parse_waypoints(uint8_t index, uint8_t size)
 
     for (count = 0; count < size; count++)
     {
-        waypoints[count] = Rx_Buffer[count+index];
+        g_waypoints[count] = Rx_Buffer[count+index];
     }
 }
