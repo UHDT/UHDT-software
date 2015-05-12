@@ -1,33 +1,33 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -g -nostartfiles -Map=xbee_test.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\xbee_test -TC:\CooCox\CoIDE\configuration\ProgramData\xbee_test/arm-gcc-link.ld -g">
-      <target file="xbee_test.elf" lastModified="14d144626da">
-         <source file="..\obj\semihosting.o" lastModified="14d0f8f5f86"/>
-         <source file="..\obj\protocol.o" lastModified="14d14397d4d"/>
-         <source file="..\obj\interrupts.o" lastModified="14d141ed42c"/>
-         <source file="..\obj\stm32f4xx_usart.o" lastModified="14d0f8f62c6"/>
-         <source file="..\obj\stm32f4xx_pwr.o" lastModified="14d0f8f6396"/>
-         <source file="..\obj\stm32f4xx_dac.o" lastModified="14d0f8f6495"/>
-         <source file="..\obj\dataqueue.o" lastModified="14d141ed4d5"/>
-         <source file="..\obj\startup_stm32f4xx.o" lastModified="14d0f8f661f"/>
-         <source file="..\obj\waypoints.o" lastModified="14d1425f6c1"/>
-         <source file="..\obj\main.o" lastModified="14d14462481"/>
-         <source file="..\obj\stm32f4xx_rcc.o" lastModified="14d0f8f68c5"/>
-         <source file="..\obj\stm32f4xx_adc.o" lastModified="14d0f8f69a4"/>
-         <source file="..\obj\printf.o" lastModified="14d0f8f6a53"/>
-         <source file="..\obj\stm32f4xx_gpio.o" lastModified="14d0f8f6ae8"/>
-         <source file="..\obj\sh_cmd.o" lastModified="14d0f8f6b00"/>
-         <source file="..\obj\system_stm32f4xx.o" lastModified="14d0f8f6b79"/>
-         <source file="..\obj\syscalls.o" lastModified="14d0f8f6bfc"/>
-         <source file="..\obj\stm32f4xx_dma.o" lastModified="14d0f8f6caa"/>
-         <source file="..\obj\stm32f4xx_spi.o" lastModified="14d0f8f6d62"/>
-         <source file="..\obj\stm32f4xx_i2c.o" lastModified="14d0f8f6e38"/>
-         <source file="..\obj\stm32f4xx_rng.o" lastModified="14d0f8f6eb8"/>
-         <source file="..\obj\misc.o" lastModified="14d0f8f6f31"/>
-         <source file="..\obj\parsers.o" lastModified="14d141ed7bf"/>
-         <source file="..\obj\stm32f4xx_rtc.o" lastModified="14d0f8f70b4"/>
-         <source file="..\obj\stm32f4xx_tim.o" lastModified="14d0f8f722c"/>
-         <source file="..\obj\xbee.o" lastModified="14d14432590"/>
+      <target file="xbee_test.elf" lastModified="14d45dfe052">
+         <source file="..\obj\semihosting.o" lastModified="14d144b79c1"/>
+         <source file="..\obj\protocol.o" lastModified="14d45dfd91e"/>
+         <source file="..\obj\interrupts.o" lastModified="14d45dfd9c9"/>
+         <source file="..\obj\stm32f4xx_usart.o" lastModified="14d144b7de1"/>
+         <source file="..\obj\stm32f4xx_pwr.o" lastModified="14d144b7eda"/>
+         <source file="..\obj\stm32f4xx_dac.o" lastModified="14d144b7fc2"/>
+         <source file="..\obj\dataqueue.o" lastModified="14d45dfda27"/>
+         <source file="..\obj\startup_stm32f4xx.o" lastModified="14d144b80c6"/>
+         <source file="..\obj\waypoints.o" lastModified="14d45dfdaf3"/>
+         <source file="..\obj\main.o" lastModified="14d45dfdbae"/>
+         <source file="..\obj\stm32f4xx_rcc.o" lastModified="14d144b844e"/>
+         <source file="..\obj\stm32f4xx_adc.o" lastModified="14d144b8597"/>
+         <source file="..\obj\printf.o" lastModified="14d144b8690"/>
+         <source file="..\obj\stm32f4xx_gpio.o" lastModified="14d144b8765"/>
+         <source file="..\obj\sh_cmd.o" lastModified="14d144b8789"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="14d144b882e"/>
+         <source file="..\obj\syscalls.o" lastModified="14d144b88cf"/>
+         <source file="..\obj\stm32f4xx_dma.o" lastModified="14d144b89ba"/>
+         <source file="..\obj\stm32f4xx_spi.o" lastModified="14d144b8aac"/>
+         <source file="..\obj\stm32f4xx_i2c.o" lastModified="14d144b8ba5"/>
+         <source file="..\obj\stm32f4xx_rng.o" lastModified="14d144b8c40"/>
+         <source file="..\obj\misc.o" lastModified="14d144b8cdf"/>
+         <source file="..\obj\parsers.o" lastModified="14d45dfdbfd"/>
+         <source file="..\obj\stm32f4xx_rtc.o" lastModified="14d144b8eba"/>
+         <source file="..\obj\stm32f4xx_tim.o" lastModified="14d144b907b"/>
+         <source file="..\obj\xbee.o" lastModified="14d45dfdd35"/>
       </target>
    </processor>
 </history>

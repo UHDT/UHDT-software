@@ -20,10 +20,10 @@ void int_init_timer()
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
     TIM_TimeBaseInitTypeDef TIM_BaseStructure;
     // frequency = ((clockspeed/2) / prescaler) / period
-    // (180000000/2) / 11372 / 100 = 80 (About 100ms)
-    TIM_BaseStructure.TIM_Prescaler = 11372;
+    // (168000000/2) / 16800 / 100 = 80 (About 100ms)
+    TIM_BaseStructure.TIM_Prescaler = 60000;
     TIM_BaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-    TIM_BaseStructure.TIM_Period = 100;
+    TIM_BaseStructure.TIM_Period = 140;
     TIM_BaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_BaseStructure.TIM_RepetitionCounter = 0;
     TIM_TimeBaseInit(TIM2, &TIM_BaseStructure);

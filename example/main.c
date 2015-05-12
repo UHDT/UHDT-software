@@ -10,6 +10,8 @@
  */
 
 #define MAIN
+#include <stdio.h>
+
 #include "macros.h"
 //#include "globals.h"
 #include "xbee.h"
@@ -36,7 +38,6 @@ int main(void)
 
     uint8_t packet [10] = {1,2,3,4,5,6,7,8,9,0};
     uint8_t packet2 [3] = {0xFF,0xFE,0xEF};
-    g_transmit_time = 1000;
     while(1)
     {
         //tx_request(stuffs, sizeof(stuffs));
@@ -46,7 +47,6 @@ int main(void)
         //protocol_packet_generator(stuffs,g_queue);
 
         //tx_request(packet,sizeof(packet));
-        printf(g_waypoints[0]);
         Delay(100000);
     }
 }
